@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -121,7 +121,343 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: ui-element-health-bar_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 326
+        width: 199
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceab94e6e0487b0499e4e5586713dd18
+      internalID: 996937281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 329
+        width: 66
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f8fcfe486f1567449acb44d0a49e8a6
+      internalID: 1104371144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_2
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 330
+        width: 326
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f6eaac418100774bbd9708fa93c45f1
+      internalID: 1024878974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_3
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 275
+        width: 199
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9e7357f67752b7489ced97ef0d849cc
+      internalID: -1256412694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_4
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 271
+        width: 62
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16a0ba80f58082d48b204f7e511dc858
+      internalID: -148065889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_5
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 275
+        width: 326
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82c2881a6446cfb4fa9c3e7ced61f860
+      internalID: 1744946139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_6
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 213
+        width: 206
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf4e3b5feba2fe740bcce310c4c42550
+      internalID: -910494338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_7
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 214
+        width: 62
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db12cad08cb5a0d44b55b63f403188ae
+      internalID: -1329426159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_8
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 217
+        width: 326
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c74cac98395b7149907358c648b674b
+      internalID: -685626614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_9
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 147
+        width: 217
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c679da865145692449e8e280cf97e218
+      internalID: 1043542833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_10
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 163
+        width: 32
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcb126d18c7422a4682ced00a7cb371b
+      internalID: 323289167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_11
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 143
+        width: 333
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5753a652404208d45ad55c8d13d3389f
+      internalID: -1261842443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_12
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 77
+        width: 629
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba936b133e971124f94e292a7505cd86
+      internalID: -969308880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_13
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 0
+        width: 218
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66e02d0d3155d7445be223cd60a18caf
+      internalID: 2146557754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_14
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 0
+        width: 132
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27825b97996bae145887ebc78100a0aa
+      internalID: -1404812398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui-element-health-bar_15
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 0
+        width: 202
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c6a63b02c5a8f94882abe1289a2c713
+      internalID: -76103237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +468,23 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ui-element-health-bar_0: 996937281
+      ui-element-health-bar_1: 1104371144
+      ui-element-health-bar_10: 323289167
+      ui-element-health-bar_11: -1261842443
+      ui-element-health-bar_12: -969308880
+      ui-element-health-bar_13: 2146557754
+      ui-element-health-bar_14: -1404812398
+      ui-element-health-bar_15: -76103237
+      ui-element-health-bar_2: 1024878974
+      ui-element-health-bar_3: -1256412694
+      ui-element-health-bar_4: -148065889
+      ui-element-health-bar_5: 1744946139
+      ui-element-health-bar_6: -910494338
+      ui-element-health-bar_7: -1329426159
+      ui-element-health-bar_8: -685626614
+      ui-element-health-bar_9: 1043542833
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

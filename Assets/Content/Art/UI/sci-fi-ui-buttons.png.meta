@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -121,7 +121,511 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 294
+        width: 179
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9bbdd78087a4794391283cd692b7169
+      internalID: 1304185971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_1
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 302
+        width: 67
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de60f29a8e4ab404a898938fd5cf8bdf
+      internalID: -608441242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_2
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 314
+        width: 51
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4022117967e0a294b93717be2f33f0e5
+      internalID: -509821505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_3
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 314
+        width: 120
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f59ede9e247d3594193d14ac9c54def9
+      internalID: 962561941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_4
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 314
+        width: 55
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4c86cec6683bf641bce78a6c0f4b079
+      internalID: -876675989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_5
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 190
+        width: 70
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f509cf788983534eb1e411d7c2f8749
+      internalID: 925826665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_6
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 190
+        width: 75
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 654d591dc1c3b07439ec920fd630ac16
+      internalID: -1490223144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_7
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 202
+        width: 78
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21ca0de4e0ca4264084c3bb5e802a330
+      internalID: 461935498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_8
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 205
+        width: 101
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d49c3fdb06ad3e4aa698357b26fe1ba
+      internalID: -594144791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_9
+      rect:
+        serializedVersion: 2
+        x: 446
+        y: 206
+        width: 62
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c1aeca7c1d3324469d00ee07f8d1e23
+      internalID: 365759877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_10
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 205
+        width: 86
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89b73808c0d839b4d8b6ac14799fb8b8
+      internalID: -1961045374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_11
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 101
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a46a566344fd389468387b20092b18b2
+      internalID: 1113083448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_12
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 108
+        width: 82
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac8ff6fc42f44734386b08c970ed8999
+      internalID: 1279600718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_13
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 100
+        width: 58
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1a6688117a2bfb4ea4db26aee15c695
+      internalID: -1923347451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_14
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 97
+        width: 67
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19663aab9ab4bdc4f9fb85c2ff4bd9b9
+      internalID: 245397824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_15
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 100
+        width: 59
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feb91efebef089f4baaf812e800bb3da
+      internalID: -648333393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_16
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 92
+        width: 86
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba23461949e15cc4ea2d32a929e061aa
+      internalID: -1090471153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_17
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 7
+        width: 62
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c1d9f1a855c0664cac4ca257c04173d
+      internalID: 827947430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_18
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 19
+        width: 47
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcd32fdac6ca0fb45bab3838e9718eb7
+      internalID: 1210363648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_19
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 19
+        width: 32
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c119822337639cd4e86c1801a464d43a
+      internalID: -325057229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_20
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 7
+        width: 63
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03a58dec433e74446b0377bb7b32a4cf
+      internalID: -46642323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_21
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 7
+        width: 63
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0703299f9efc28a419e3c79251a1116d
+      internalID: -611811951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_22
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 7
+        width: 62
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5db0c7370e732f4789ea41ddb8227d4
+      internalID: 1631819573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sci-fi-ui-buttons_23
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 3
+        width: 85
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf7a2224909413745b9a7d5e1dfbe559
+      internalID: -614252683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +636,31 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sci-fi-ui-buttons_0: 1304185971
+      sci-fi-ui-buttons_1: -608441242
+      sci-fi-ui-buttons_10: -1961045374
+      sci-fi-ui-buttons_11: 1113083448
+      sci-fi-ui-buttons_12: 1279600718
+      sci-fi-ui-buttons_13: -1923347451
+      sci-fi-ui-buttons_14: 245397824
+      sci-fi-ui-buttons_15: -648333393
+      sci-fi-ui-buttons_16: -1090471153
+      sci-fi-ui-buttons_17: 827947430
+      sci-fi-ui-buttons_18: 1210363648
+      sci-fi-ui-buttons_19: -325057229
+      sci-fi-ui-buttons_2: -509821505
+      sci-fi-ui-buttons_20: -46642323
+      sci-fi-ui-buttons_21: -611811951
+      sci-fi-ui-buttons_22: 1631819573
+      sci-fi-ui-buttons_23: -614252683
+      sci-fi-ui-buttons_3: 962561941
+      sci-fi-ui-buttons_4: -876675989
+      sci-fi-ui-buttons_5: 925826665
+      sci-fi-ui-buttons_6: -1490223144
+      sci-fi-ui-buttons_7: 461935498
+      sci-fi-ui-buttons_8: -594144791
+      sci-fi-ui-buttons_9: 365759877
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
