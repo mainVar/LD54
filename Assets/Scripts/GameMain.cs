@@ -1,3 +1,4 @@
+using Animation2D;
 using Roguelike.Physics2D;
 using Unity.Mathematics;
 using UnityEngine;
@@ -11,19 +12,27 @@ namespace LD54 {
     public class GameMain : MonoBehaviour {
         private World world;
         private Systems updateSystems;
-        public GameObject prefab;
+        [SerializeField] GameObject prefab;
+        [SerializeField] private AnimationsHolder animationsHolder;
         void Awake() {
             world = new World();
             MonoConverter.Init(world);
             var grid2D = new Grid2D(8, 11,5 , world, new Vector2(-10,-15));
             Injector.AddAsSingle(grid2D);
+            Injector.AddAsSingle(animationsHolder);
             updateSystems = new Systems(world)
-            
+                    
+                    .Add(new OnSpawnTransformSystem())
+                    .Add(new InputSystem())
+                    .Add(new MoveByInputSystem())
                     .Add(new PrefabSpawnerSystem(prefab))
+                    .Add(new Animation2DStateDirectionSystem())
+                    .Add(new Animation2DSystem())
                     .Add(new Collision2DPostSystem())
                     .Add(new Collision2DGroup())
                     .Add(new SyncTransformSystem2())
                     .Add(new RemoveComponentSystem(typeof(EntityConvertedEvent)))
+                    .Add(new RemoveComponentSystem(typeof(PooledEvent)))
                 ;
             updateSystems.Init();
             
@@ -99,6 +108,21 @@ namespace LD54 {
             }
         }
     }
+
+    partial class OnSpawnTransformSystem : UpdateSystem {
+        public override void Update() {
+            entities.Each((TransformComponent TransformComponent, TransformRef transformRef, PooledEvent s) => {
+                TransformComponent.position = transformRef.value.position;
+                TransformComponent.rotation = transformRef.value.rotation;
+                TransformComponent.scale = transformRef.value.localScale;
+            });
+            entities.Each((TransformComponent TransformComponent, TransformRef transformRef, EntityConvertedEvent s) => {
+                TransformComponent.position = transformRef.value.position;
+                TransformComponent.rotation = transformRef.value.rotation;
+                TransformComponent.scale = transformRef.value.localScale;
+            });
+        }
+    }
     partial class PrefabSpawnerSystem : UpdateSystem {
         private float time = 0.001f;
         private float timer;
@@ -144,6 +168,80 @@ namespace LD54 {
             vector2 += offset;
             return new Vector3(vector2.x, vector2.y, 0);
         }
+    }
+
+    public partial class InputSystem : UpdateSystem {
+        public override void Update() {
+            entities.Without<Inactive>().Each((InputComponent input) =>
+            {
+                input.horizontal = Input.GetAxis("Horizontal");
+                input.vertical = Input.GetAxis("Vertical");
+            });
+        }
+    }
+    public partial class MoveByInputSystem : UpdateSystem {
+        private const float MINIMUM_INPUT = 0.01f;
+        public override void Update() {
+            var dt = Time.deltaTime;
+            entities.Without<Inactive>().Each((TransformComponent transform, InputComponent input, MoveSpeed speed) =>
+            {
+                float trueMoveSpeed;
+
+                if (Mathf.Abs(input.horizontal) > MINIMUM_INPUT && Mathf.Abs(input.vertical) > MINIMUM_INPUT)
+                    trueMoveSpeed = speed.value * 0.75f;
+                else
+                    trueMoveSpeed = speed.value;
+            
+                if (input.horizontal > MINIMUM_INPUT || input.horizontal < -MINIMUM_INPUT)
+                    transform.position += new Vector3(input.horizontal * trueMoveSpeed * dt, 0);
+
+                if (input.vertical > MINIMUM_INPUT || input.vertical < -MINIMUM_INPUT)
+                    transform.position += new Vector3(0, input.vertical * trueMoveSpeed * dt);
+            });
+        }
+    }
+    [EcsComponent]
+    public struct MoveSpeed {
+        public float value;
+    }
+    public partial class Animation2DStateDirectionSystem : UpdateSystem {
+        private readonly string[] runStates = new[] { "N", "NW", "W", "SW", "S", "SE", "E", "NE" };
+        public override void Update() {
+            entities.Each((Entity e, SpriteAnimation spriteAnimation, InputComponent input, AnimationIndex animationIndex) => {
+                animationIndex.value = DirectionToIndex(new Vector2(input.horizontal, input.vertical));
+                if (animationIndex.value != animationIndex.old) {
+                    spriteAnimation.Play(runStates[animationIndex.value]);
+                    animationIndex.old = animationIndex.value;
+                }
+                
+            });
+        }
+
+        private int DirectionToIndex(Vector2 dir) {
+            var normDir = dir.normalized;
+            float step = 360 / 8;
+            float offset = step / 2;
+            float angle = Vector2.SignedAngle(Vector2.up, normDir);
+
+            angle += offset;
+            if (angle < 0) {
+                angle += 360;
+            }
+
+            float stepCount = angle / step;
+            return Mathf.FloorToInt(stepCount);
+            return 1;
+        }
+    }
+    [EcsComponent]
+    public struct InputComponent {
+        public float horizontal;
+        public float vertical;
+    }
+    [EcsComponent]
+    public struct AnimationIndex {
+        public int value;
+        public int old;
     }
 }
 

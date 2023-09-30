@@ -184,7 +184,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 17.95
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -209,7 +209,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 4.5, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -271,7 +271,7 @@ MonoBehaviour:
       type: {class: Rectangle2D, ns: Roguelike.Physics2D, asm: Collision2D}
       data:
         index: 0
-        w: 4
+        w: 6
         h: 4
         layer: 0
         collisionWith: 0
@@ -284,7 +284,7 @@ Transform:
   m_GameObject: {fileID: 588368864}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.76, y: 3.54, z: 0}
+  m_LocalPosition: {x: 3.2, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -319,7 +319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44005862391222941b134eee83880b9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 443425641850081880, guid: 2b7d446b5061a4c47bd1353fa6c59106, type: 3}
+  prefab: {fileID: 1695310116860075572, guid: f2e3e73a328ab8245a9c0b0df8c5afb3, type: 3}
+  animationsHolder: {fileID: 11400000, guid: 7c63e2a9cf5f6354bae532799ed43408, type: 2}
 --- !u!4 &751818563
 Transform:
   m_ObjectHideFlags: 0
