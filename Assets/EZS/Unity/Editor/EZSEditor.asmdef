@@ -1,0 +1,17 @@
+{
+    "name": "EZSEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bf13737622ae9074bb70c7b01500f994",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
