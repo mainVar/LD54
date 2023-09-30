@@ -226,18 +226,15 @@ public partial class SyncTransformSystem : UpdateSystem, IJobSystemTag
         }
     }
 }
-
 [EcsComponent]
-public struct SyncBackTransformTag
-{
-}
 public struct StaticTag{}
+[EcsComponent]
 public struct TransformComponent {
-    public float3 position;
-    public float3 scale;
-    public quaternion rotation;
+    public Vector3 position;
+    public Vector3 scale;
+    public Quaternion rotation;
 }
-
+[EcsComponent]
 public struct TransformRef {
     public UnityEngine.Transform value;
 }

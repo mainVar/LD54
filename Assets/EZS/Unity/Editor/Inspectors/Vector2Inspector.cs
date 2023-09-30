@@ -38,4 +38,22 @@ namespace Wargon.ezs.Unity
             return new float2(vector.x, vector.y);
         }
     }
+    public class Float3Inspector : TypeInspector<float3>
+    {
+        public override object DrawCollectionElement(Rect rect, object element, int index)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override object DrawInternal(string fieldName, ref float3 field)
+        {
+            var vector = EditorGUILayout.Vector3Field($"    {fieldName}", new Vector3(field.x, field.y, field.z));
+            return new float3(vector.x, vector.y, field.z);
+        }
+
+        protected override float3 DrawGenericInternal(string fieldName, ref float3 field) {
+            var vector = EditorGUILayout.Vector3Field($"    {fieldName}", new Vector3(field.x, field.y, field.z));
+            return new float3(vector.x, vector.y, field.z);
+        }
+    }
 }

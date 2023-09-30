@@ -444,7 +444,7 @@ namespace Wargon.ezs {
         void StopCheck(int index);
         bool Active(int index);
     }
-    internal partial class RemoveComponentSystem : UpdateSystem {
+    public partial class RemoveComponentSystem : UpdateSystem {
         private readonly int typeID;
         private EntityQuery query;
         public RemoveComponentSystem(int type) => typeID = type;
@@ -478,8 +478,8 @@ namespace Wargon.ezs {
                 var index = query.GetEntityIndex(i);
                 ref var transformRef = ref transforms.items[index];
                 ref var transformComponent = ref transformPure.items[index];
-                //transformComponent.right = transformComponent.Rotation * UnityEngine.Vector3.right;
-                //transformComponent.forward = transformComponent.Rotation * UnityEngine.Vector3.forward;
+                // transformComponent.right = transformComponent.rotation * UnityEngine.Vector3.right;
+                // transformComponent.forward = transformComponent.rotation * UnityEngine.Vector3.forward;
                 transformRef.value.position = transformComponent.position;
                 transformRef.value.rotation = transformComponent.rotation;
                 transformRef.value.localScale = transformComponent.scale;

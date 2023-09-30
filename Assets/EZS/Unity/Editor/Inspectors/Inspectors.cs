@@ -21,6 +21,7 @@ namespace Wargon.ezs.Unity {
             public static Vector3Inspector Vector3 = new Vector3Inspector();
             public static Vector4Inspector Vector4 = new Vector4Inspector();
             public static Float2Inspector Float2 = new Float2Inspector();
+            public static Float3Inspector Float3 = new Float3Inspector();
             private static Dictionary<string, UnityObjectInspector> UnityObjectInspectors =
                 new Dictionary<string, UnityObjectInspector>();
             
