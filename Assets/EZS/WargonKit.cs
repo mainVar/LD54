@@ -158,32 +158,7 @@ namespace Wargon
         }
     }
     
-    public static class UnsafeKit {
-        
-        public unsafe static void* Resize<T>(void* oldPointer, int oldCapacity, int newCapacity, Unity.Collections.Allocator allocator) where T : struct
-        {
-            var strSize = Unity.Collections.LowLevel.Unsafe.UnsafeUtility.SizeOf<T>();
-            var newSize = strSize * newCapacity;
-            var oldSize = strSize * oldCapacity;
-            var newBuffer = Unity.Collections.LowLevel.Unsafe.UnsafeUtility.Malloc(newSize, 0, allocator);
-            Buffer.MemoryCopy(oldPointer, newBuffer, newSize, oldSize);
-            Unity.Collections.LowLevel.Unsafe.UnsafeUtility.Free(oldPointer, allocator);
-            
-            return newBuffer;
-        }
-        public unsafe static void* ResizeU<T>(void* oldPointer, int oldCapacity, int newCapacity, Unity.Collections.Allocator allocator) where T : struct
-        {
-            var strSize = Unity.Collections.LowLevel.Unsafe.UnsafeUtility.SizeOf<T>();
-            var newSize = strSize * newCapacity;
-            var oldSize = strSize * oldCapacity;
-            var newBuffer = Unity.Collections.LowLevel.Unsafe.UnsafeUtility.Malloc(newSize, 0, allocator);
-            Unity.Collections.LowLevel.Unsafe.UnsafeUtility.MemCpy(newBuffer, oldPointer, oldSize);
-            
-            Unity.Collections.LowLevel.Unsafe.UnsafeUtility.Free(oldPointer, allocator);
-            
-            return newBuffer;
-        }
-    }
+
 }
 
 public static class ListExtension

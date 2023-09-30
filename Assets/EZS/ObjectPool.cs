@@ -325,8 +325,3 @@ public class PoolContainer {
         transform.name = $"[Pool] {Name} [KeyID:{poolKey}]  Size:{size}";
     }
 }
-
-[EcsComponent]
-public struct PooledEvent
-{
-}

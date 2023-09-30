@@ -84,7 +84,7 @@ namespace Wargon.ezs.Unity
             EditorGUILayout.LabelField("time ms:  | max time ms:");
             EditorGUILayout.EndHorizontal();
 
-            var iJobSystemInteraceTag = typeof(IJobSystemTag);
+
             var burstSystemsStyle = new GUIStyle(EditorStyles.textField);
             burstSystemsStyle.normal.textColor = new Color(1f, 0.46f, 0f);
             
@@ -96,13 +96,7 @@ namespace Wargon.ezs.Unity
                 system.timems = systemsDebug.executeTimes[i];
                 system.SetNewTime(system.timems);
                 EditorGUILayout.BeginHorizontal(GUI.skin.box);
-                if (iJobSystemInteraceTag.IsInstanceOfType(systemsDebug.Systems.updateSystemsList[i]))
-                {
-                    systemsDebug.active[i] = EditorGUILayout.Toggle(systemsDebug.active[i]);
-                    EditorGUILayout.LabelField(system.name, burstSystemsStyle);
-                    EditorGUILayout.LabelField($"{(system.timems/* > 0.002 ? system.time : 0.000*/): 0.000} ms, av {system.GetAvarage() : 0.000} ms", burstSystemsStyle);
-                }
-                else 
+
                 if (systemType.IsDefined(typeof(SystemColorAttribute), false)) {
                     systemsDebug.active[i] = EditorGUILayout.Toggle(systemsDebug.active[i]);
                     DrawSystemWithColor(systemType, ref system);

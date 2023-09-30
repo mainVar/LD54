@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using UnityEngine.Jobs;
 using Wargon.DI;
-using Wargon.ezs.Unity;
 
 namespace Wargon.ezs {
     public class Systems {
@@ -457,66 +453,6 @@ namespace Wargon.ezs {
                 ref var e = ref query.GetEntity(index);
                 e.RemoveByTypeID(typeID);
             }
-        }
-    }
-
-    public partial class SyncTransformSystem2 : UpdateSystem {
-        private Pool<TransformRef> transforms;
-        private Pool<TransformComponent> transformPure;
-        private EntityQuery query;
-        protected override void OnCreate() {
-            query = world.GetQuery().With<TransformRef>().With<TransformComponent>().Without<Inactive>().Without<StaticTag>();
-            transforms = world.GetPool<TransformRef>();
-            transformPure = world.GetPool<TransformComponent>();
-        }
-
-        public override void Update() {
-            //Span<TransformComponent> spanT = new Span<TransformComponent>(transformPure.items);
-            //Span<TransformRef> spanR = new Span<TransformRef>(transforms.items);
-            
-            for (var i = 0; i < query.Count; i++) {
-                var index = query.GetEntityIndex(i);
-                ref var transformRef = ref transforms.items[index];
-                ref var transformComponent = ref transformPure.items[index];
-                // transformComponent.right = transformComponent.rotation * UnityEngine.Vector3.right;
-                // transformComponent.forward = transformComponent.rotation * UnityEngine.Vector3.forward;
-                transformRef.value.position = transformComponent.position;
-                transformRef.value.rotation = transformComponent.rotation;
-                transformRef.value.localScale = transformComponent.scale;
-            }
-        }
-    }
-
-    internal class TransformsQuery : EntityQuery {
-        private TransformAccessArray transformAccessArray;
-        public TransformsQuery(World world) : base(world) {
-            TransformAccessArray.Allocate(world.PoolsCacheSize, 1, out transformAccessArray);
-            With<TransformComponent>().With<TransformRef>().Without<Inactive>();
-
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Add(int entity) {
-            if (entities.Length - 1 <= count) {
-                Array.Resize(ref entities, count + 16);
-            }
-            if (entitiesMap.Length - 1 <= entity) {
-                Array.Resize(ref entitiesMap, entity + 16);
-            }
-            entities[count++] = entity;
-            entitiesMap[entity] = count;
-            transformAccessArray.Add(world.GetEntity(entity).Get<TransformRef>().value);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public new void Remove(int entity) {
-            if (!Has(entity)) return;
-            var index = entitiesMap[entity] - 1;
-            entitiesMap[entity] = 0;
-            count--;
-            if (count > index) {
-                entities[index] = entities[count];
-                entitiesMap[entities[index]] = index + 1;
-            }
-            transformAccessArray.RemoveAtSwapBack(entity);
         }
     }
 }

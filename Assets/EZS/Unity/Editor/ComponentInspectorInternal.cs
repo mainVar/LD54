@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
@@ -402,6 +403,22 @@ namespace Wargon.ezs.Unity
         public static Type GetElementsType(this Type target)
         {
             return !target.IsArray ? target.GetGenericArguments()[0] : target.GetElementType();
+        }
+    }
+    public static class Log
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Show(string massage)
+        {
+            Debug.Log(massage);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Show(Color color, string massage)
+        {
+#if UNITY_EDITOR
+            Debug.Log($"<color=#{(byte) (color.r * 255f):X2}{(byte) (color.g * 255f):X2}{(byte) (color.b * 255f):X2}>{massage}</color>");
+#endif
         }
     }
 }

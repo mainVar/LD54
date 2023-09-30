@@ -349,9 +349,9 @@ MonoBehaviour:
   Entity:
     id: 0
   Components:
-  - rid: 7459472406617260032
-  - rid: 7459472406617260033
-  - rid: 7459472406617260035
+  - rid: 7459472410658209802
+  - rid: 7459472410658209803
+  - rid: 7459472410658209804
   runTime: 0
   destroyObject: 0
   destroyComponent: 0
@@ -359,22 +359,22 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7459472406617260032
-      type: {class: TransformComponent, ns: , asm: EZS}
+    - rid: 7459472410658209802
+      type: {class: TransformComponent, ns: , asm: EZSUnity}
       data:
         position: {x: 0, y: 0, z: 0}
-        scale: {x: 1, y: 1, z: 0}
+        scale: {x: 0, y: 0, z: 0}
         rotation: {x: 0, y: 0, z: 0, w: 0}
-    - rid: 7459472406617260033
-      type: {class: TransformRef, ns: , asm: EZS}
+    - rid: 7459472410658209803
+      type: {class: TransformRef, ns: , asm: EZSUnity}
       data:
         value: {fileID: 588368866}
-    - rid: 7459472406617260035
+    - rid: 7459472410658209804
       type: {class: Rectangle2D, ns: Roguelike.Physics2D, asm: Collision2D}
       data:
         index: 0
-        w: 6
-        h: 4
+        w: 9.45
+        h: 3
         layer: 0
         collisionWith: 0
 --- !u!4 &588368866

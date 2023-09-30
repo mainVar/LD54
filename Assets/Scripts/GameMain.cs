@@ -11,7 +11,8 @@ namespace LD54 {
     [DefaultExecutionOrder(-35)]
     public class GameMain : MonoBehaviour {
         private World world;
-        private Systems updateSystems;
+        private Systems update;
+        private Systems fixedUpdate;
         [SerializeField] GameObject prefab;
         [SerializeField] private AnimationsHolder animationsHolder;
         void Awake() {
@@ -20,7 +21,7 @@ namespace LD54 {
             var grid2D = new Grid2D(8, 11,5 , world, new Vector2(-10,-15));
             Injector.AddAsSingle(grid2D);
             Injector.AddAsSingle(animationsHolder);
-            updateSystems = new Systems(world)
+            update = new Systems(world)
                     
                     .Add(new OnSpawnTransformSystem())
                     .Add(new InputSystem())
@@ -34,9 +35,13 @@ namespace LD54 {
                     .Add(new RemoveComponentSystem(typeof(EntityConvertedEvent)))
                     .Add(new RemoveComponentSystem(typeof(PooledEvent)))
                 ;
-            updateSystems.Init();
+            update.Init();
+            fixedUpdate = new Systems(world)
+
+                ;
             
-            
+            fixedUpdate.Init();
+
             new DebugInfo(world);
         }
 
@@ -44,10 +49,15 @@ namespace LD54 {
         void Update()
         {
             if (world != null) {
-                updateSystems.OnUpdate();
+                update.OnUpdate();
             }
         }
-
+        void FixedUpdate()
+        {
+            if (world != null) {
+                fixedUpdate.OnUpdate();
+            }
+        }
         private void OnDestroy() {
             if(world==null) return;
             world.Destroy();
@@ -183,20 +193,23 @@ namespace LD54 {
         private const float MINIMUM_INPUT = 0.01f;
         public override void Update() {
             var dt = Time.deltaTime;
-            entities.Without<Inactive>().Each((TransformComponent transform, InputComponent input, MoveSpeed speed) =>
+            entities.Without<Inactive>().Each((TransformComponent transform, InputComponent input, MoveSpeed speed, Circle2D circle2D) =>
             {
-                float trueMoveSpeed;
+                if (!circle2D.collided) {
+                    float trueMoveSpeed;
 
-                if (Mathf.Abs(input.horizontal) > MINIMUM_INPUT && Mathf.Abs(input.vertical) > MINIMUM_INPUT)
-                    trueMoveSpeed = speed.value * 0.75f;
-                else
-                    trueMoveSpeed = speed.value;
+                    if (Mathf.Abs(input.horizontal) > MINIMUM_INPUT && Mathf.Abs(input.vertical) > MINIMUM_INPUT)
+                        trueMoveSpeed = speed.value * 0.75f;
+                    else
+                        trueMoveSpeed = speed.value;
             
-                if (input.horizontal > MINIMUM_INPUT || input.horizontal < -MINIMUM_INPUT)
-                    transform.position += new Vector3(input.horizontal * trueMoveSpeed * dt, 0);
+                    if (input.horizontal > MINIMUM_INPUT || input.horizontal < -MINIMUM_INPUT)
+                        transform.position += new Vector3(input.horizontal * trueMoveSpeed * dt, 0);
 
-                if (input.vertical > MINIMUM_INPUT || input.vertical < -MINIMUM_INPUT)
-                    transform.position += new Vector3(0, input.vertical * trueMoveSpeed * dt);
+                    if (input.vertical > MINIMUM_INPUT || input.vertical < -MINIMUM_INPUT)
+                        transform.position += new Vector3(0, input.vertical * trueMoveSpeed * dt);
+                }
+
             });
         }
     }

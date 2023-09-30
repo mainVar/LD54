@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Animations:
   - {fileID: 11400000, guid: ef1d0424f4882d249b01edb52f78cb81, type: 2}
-  FrameTime: 0.04
+  FrameTime: 0.06
   AnimationsConstFile: {fileID: 11500000, guid: 19caaa028211e5b41babf418793b8ca2, type: 3}
   names: []

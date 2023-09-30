@@ -100,14 +100,15 @@ MonoBehaviour:
   Entity:
     id: 0
   Components:
-  - rid: 7459472406617260036
-  - rid: 7459472406617260037
-  - rid: 7459472406617260038
-  - rid: 7459472406617260039
-  - rid: 7459472406617260040
-  - rid: 7459472406617260041
-  - rid: 7459472406617260042
-  - rid: 7459472406617260043
+  - rid: 7459472410658209793
+  - rid: 7459472410658209794
+  - rid: 7459472410658209795
+  - rid: 7459472410658209796
+  - rid: 7459472410658209797
+  - rid: 7459472410658209798
+  - rid: 7459472410658209799
+  - rid: 7459472410658209800
+  - rid: 7459472410658209801
   runTime: 0
   destroyObject: 0
   destroyComponent: 0
@@ -115,54 +116,59 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7459472406617260036
-      type: {class: SpriteRender, ns: Animation2D, asm: Assembly-CSharp}
-      data:
-        value: {fileID: 4545982878371436863}
-    - rid: 7459472406617260037
+    - rid: 7459472410658209793
       type: {class: SpriteAnimation, ns: Animation2D, asm: Assembly-CSharp}
       data:
         AnimationList: {fileID: 11400000, guid: ef1d0424f4882d249b01edb52f78cb81, type: 2}
-        currentState: E
-        nextState: E
+        currentState: S
+        nextState: S
         frame: 0
         times: 0
         currentFrames: []
         created: 0
-    - rid: 7459472406617260038
-      type: {class: InputComponent, ns: LD54, asm: Assembly-CSharp}
+    - rid: 7459472410658209794
+      type: {class: SpriteRender, ns: Animation2D, asm: Assembly-CSharp}
       data:
-        horizontal: 0
-        vertical: 0
-    - rid: 7459472406617260039
-      type: {class: AnimationIndex, ns: LD54, asm: Assembly-CSharp}
+        value: {fileID: 4545982878371436863}
+    - rid: 7459472410658209795
+      type: {class: TransformRef, ns: , asm: EZSUnity}
       data:
-        value: 0
-        old: 0
-    - rid: 7459472406617260040
-      type: {class: TransformComponent, ns: , asm: EZS}
+        value: {fileID: 4912915253209915736}
+    - rid: 7459472410658209796
+      type: {class: TransformComponent, ns: , asm: EZSUnity}
       data:
         position: {x: 0, y: 0, z: 0}
         scale: {x: 1, y: 1, z: 1}
         rotation: {x: 0, y: 0, z: 0, w: 0}
-    - rid: 7459472406617260041
-      type: {class: TransformRef, ns: , asm: EZS}
+    - rid: 7459472410658209797
+      type: {class: AnimationIndex, ns: LD54, asm: Assembly-CSharp}
       data:
-        value: {fileID: 4912915253209915736}
-    - rid: 7459472406617260042
+        value: 0
+        old: 0
+    - rid: 7459472410658209798
+      type: {class: Health, ns: LD54, asm: Assembly-CSharp}
+      data:
+        current: 25
+        max: 25
+    - rid: 7459472410658209799
+      type: {class: InputComponent, ns: LD54, asm: Assembly-CSharp}
+      data:
+        horizontal: 0
+        vertical: 0
+    - rid: 7459472410658209800
       type: {class: MoveSpeed, ns: LD54, asm: Assembly-CSharp}
       data:
-        value: 4
-    - rid: 7459472406617260043
+        value: 2
+    - rid: 7459472410658209801
       type: {class: Circle2D, ns: Roguelike.Physics2D, asm: Collision2D}
       data:
         index: 0
         cellIndex: 0
-        radius: 0.2
+        radius: 0.16
         position:
           x: 0
           y: 0
         collided: 0
         trigger: 0
-        layer: 0
-        collideWith: 0
+        layer: 2
+        collideWith: 2
