@@ -7,10 +7,12 @@ namespace LD54.Sound
     {
         public static SoundManager Instance;
 
-        private List<AudioSource> audioSources = new List<AudioSource>();
+        private List<AudioSource> musicSources = new List<AudioSource>();
+        private List<AudioSource> soundEffectSources = new List<AudioSource>();
 
         private bool isMusicEnabled = true;
         private bool isSoundEffectsEnabled = true;
+        private float savedMusicVolume = 1.0f; 
 
         private void Awake()
         {
@@ -28,11 +30,50 @@ namespace LD54.Sound
         public void ToggleMusic()
         {
             isMusicEnabled = !isMusicEnabled;
+
+            if (isMusicEnabled)
+            {
+                SetMusicVolume(savedMusicVolume);
+            }
+            else
+            {
+                savedMusicVolume = GetMusicVolume();
+                SetMusicVolume(0.0f);
+            }
+        }
+        public void SetMusicVolume(float volume)
+        {
+            foreach (AudioSource musicSource in musicSources)
+            {
+                musicSource.volume = volume;
+            }
+        }
+
+        /// <summary>
+        /// Get sound volume 1 sound source
+        /// </summary>
+        /// <returns></returns>
+        public float GetMusicVolume()
+        {
+            if (musicSources.Count > 0)
+            {
+                return musicSources[0].volume; 
+            }
+            return 0.0f;
         }
 
         public void ToggleSoundEffects()
         {
             isSoundEffectsEnabled = !isSoundEffectsEnabled;
+
+            if (!isSoundEffectsEnabled)
+            {
+                for (int i = soundEffectSources.Count - 1; i >= 0; i--)
+                {
+                    Destroy(soundEffectSources[i]);
+                    soundEffectSources.RemoveAt(i);
+                }
+            }
         }
 
         public void PlaySound(SoundData soundData)
@@ -55,21 +96,33 @@ namespace LD54.Sound
             if (soundData.soundType == SoundType.Music)
             {
                 source.loop = true;
+                musicSources.Add(source);
+            }
+            else
+            {
+                soundEffectSources.Add(source);
             }
 
             source.Play();
-            audioSources.Add(source);
-            
         }
 
         private void Update()
         {
-            for (int i = audioSources.Count - 1; i >= 0; i--)
+            for (int i = musicSources.Count - 1; i >= 0; i--)
             {
-                if (!audioSources[i].isPlaying)
+                if (!musicSources[i].isPlaying)
                 {
-                    Destroy(audioSources[i]);
-                    audioSources.RemoveAt(i);
+                    Destroy(musicSources[i]);
+                    musicSources.RemoveAt(i);
+                }
+            }
+
+            for (int i = soundEffectSources.Count - 1; i >= 0; i--)
+            {
+                if (!soundEffectSources[i].isPlaying)
+                {
+                    Destroy(soundEffectSources[i]);
+                    soundEffectSources.RemoveAt(i);
                 }
             }
         }
