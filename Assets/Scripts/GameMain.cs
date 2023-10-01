@@ -451,6 +451,11 @@ namespace LD54 {
     }
     public struct DeathEvent {}
     [EcsComponent] public struct Enemy{}
+
+    [EcsComponent]
+    public struct DeathSound {
+        public SoundData value;
+    }
     partial class DamageSystem : UpdateSystem {
         private EntityQuery damagedQuery;
         private Pool<EntityDamagedEvent> damagedEvent;
@@ -478,8 +483,10 @@ namespace LD54 {
     }
 
     partial class EnemyDeathSystem : UpdateSystem {
+        
         public override void Update() {
-            entities.Each((Entity entity, DeathEvent deathEvent, Enemy enemy, TransformRef transformRef) => {
+            entities.Each((Entity entity, DeathEvent deathEvent, Enemy enemy, TransformRef transformRef, DeathSound sound) => {
+                SoundManager.Instance.PlaySound(sound.value);
                 Object.Destroy(transformRef.value.gameObject);
             });
         }

@@ -111,6 +111,7 @@ MonoBehaviour:
   - rid: 7459472410658209801
   - rid: 4798378729923411968
   - rid: 4798378729923411972
+  - rid: 4798378729923411974
   runTime: 0
   destroyObject: 0
   destroyComponent: 0
@@ -126,6 +127,10 @@ MonoBehaviour:
     - rid: 4798378729923411972
       type: {class: Enemy, ns: LD54, asm: Assembly-CSharp}
       data: 
+    - rid: 4798378729923411974
+      type: {class: DeathSound, ns: LD54, asm: Assembly-CSharp}
+      data:
+        value: {fileID: 11400000, guid: e9d5ac1e445b25046bdc07d0d3864387, type: 2}
     - rid: 7459472410658209793
       type: {class: SpriteAnimation, ns: Animation2D, asm: Assembly-CSharp}
       data:

@@ -69,12 +69,12 @@ MonoBehaviour:
       data:
         projectile: {fileID: 2799522983765416775, guid: ad60b937badafe0468d0af8483e6c1d1, type: 3}
         firePoint: {fileID: 6548055436135123832}
-        spread: 0
+        spread: 6
         timer: 0
     - rid: 7459472410658209811
       type: {class: AttackDelay, ns: LD54, asm: Assembly-CSharp}
       data:
-        value: 0.05
+        value: 0.06
     - rid: 7459472410658209812
       type: {class: ProjectilePerShot, ns: LD54, asm: Assembly-CSharp}
       data:
