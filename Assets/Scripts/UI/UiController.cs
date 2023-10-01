@@ -19,7 +19,6 @@ public class UiController : MonoBehaviour
     [Inject] private GameService gameService;
 
     private bool inited;
-    private int killCount;
 
     IEnumerator Start()
     {
@@ -48,30 +47,7 @@ public class UiController : MonoBehaviour
             }
         }
     }
-
-
-    public void AddKills()
-    {
-        killCount++;
-        KillsCount.text = killCount.ToString();
-    }
-
-    public void ShowCombo(int size)
-    {
-        if (comboAnimPlaying) return;
-        StartCoroutine(ComboAnimDelay(0.5f));
-        comboAnimator.Play("ComboShow");
-    }
-
-    private bool comboAnimPlaying;
-
-    private IEnumerator ComboAnimDelay(float deley)
-    {
-        comboAnimPlaying = true;
-        yield return new WaitForSeconds(deley);
-        comboAnimPlaying = false;
-    }
-
+   
     public void GameOver()
     {
         Cursor.lockState = CursorLockMode.None;
