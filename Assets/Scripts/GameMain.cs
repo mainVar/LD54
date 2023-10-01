@@ -18,12 +18,16 @@ namespace LD54 {
         private Systems fixedUpdate;
         [SerializeField] GameObject prefab;
         [SerializeField] private AnimationsHolder animationsHolder;
+        [SerializeField] private GameService gameService;
+        
         void Awake() {
             world = new World();
             MonoConverter.Init(world);
             var grid2D = new Grid2D(10, 15,5 , world, new Vector2(-10,-15));
             Injector.AddAsSingle(grid2D);
             Injector.AddAsSingle(animationsHolder);
+            Injector.AddAsSingle(gameService);
+            
             update = new Systems(world)
                     
                     
@@ -297,12 +301,17 @@ namespace LD54 {
     }
     
     partial class OnPlayerSpawnSystem : UpdateSystem {
+        
+        [Inject]
+        GameService gameService;
+        
         public override void Update() {
             entities.Each((Entity e, TransformRef transformRef, WeaponReference weapon, Player playerTag, EntityConvertedEvent convertedEvent) => {
                 var childEntity = transformRef.value.GetChild(0).GetComponent<MonoEntity>();
                 childEntity.ConvertToEntity();
                 weapon.value = childEntity;
                 weapon.value.Entity.SetOwner(e);
+                gameService.PlayerEntity = e;
                 Debug.Log("Player Spawned");
             });
         }

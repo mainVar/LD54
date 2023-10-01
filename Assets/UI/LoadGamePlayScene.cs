@@ -13,11 +13,12 @@ public class LoadGamePlayScene : MonoBehaviour
         startButton.onClick.AddListener(LoadGameScene);
         quitButton.onClick.AddListener(CloseGame);
     }
-    // public void PlayAgen()
-    // {
-    //     Cursor.lockState = CursorLockMode.Locked;
-    //     SceneManager.LoadScene(0, LoadSceneMode.Single);
-    // }
+
+    public void PlayAgen()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
 
     public void LoadGameScene()
     {
