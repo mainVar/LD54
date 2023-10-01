@@ -485,9 +485,10 @@ namespace LD54 {
     partial class EnemyDeathSystem : UpdateSystem {
         
         public override void Update() {
-            entities.Each((Entity entity, DeathEvent deathEvent, Enemy enemy, TransformRef transformRef, DeathSound sound) => {
+            entities.Each((Entity entity, DeathEvent deathEvent, Enemy enemy, TransformRef transformRef, DeathSound sound, Pooled pooled) => {
                 SoundManager.Instance.PlaySound(sound.value);
-                Object.Destroy(transformRef.value.gameObject);
+                pooled.SetActive(false);
+                entity.Remove<DeathEvent>();
             });
         }
     }

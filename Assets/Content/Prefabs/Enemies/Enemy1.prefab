@@ -112,6 +112,7 @@ MonoBehaviour:
   - rid: 4798378729923411968
   - rid: 4798378729923411972
   - rid: 4798378729923411974
+  - rid: 4798378729923411975
   runTime: 0
   destroyObject: 0
   destroyComponent: 0
@@ -131,6 +132,18 @@ MonoBehaviour:
       type: {class: DeathSound, ns: LD54, asm: Assembly-CSharp}
       data:
         value: {fileID: 11400000, guid: e9d5ac1e445b25046bdc07d0d3864387, type: 2}
+    - rid: 4798378729923411975
+      type: {class: Pooled, ns: , asm: Assembly-CSharp}
+      data:
+        Mode: 0
+        poolKey: 0
+        containerIndex: 0
+        CurrentLifeTime: 9999
+        IsActive: 0
+        LifeTime: 9999
+        mono: {fileID: 2971841251053144961}
+        gameObject: {fileID: 1695310116860075572}
+        transform: {fileID: 4912915253209915736}
     - rid: 7459472410658209793
       type: {class: SpriteAnimation, ns: Animation2D, asm: Assembly-CSharp}
       data:
