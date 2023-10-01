@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: PlayerRun
   m_EditorClassIdentifier: 
   Name: PlayerRun
-  List: []
+  List:
+  - {fileID: 11400000, guid: 6683ff9810b71b141834395610cdc815, type: 2}
+  - {fileID: 11400000, guid: f78aeaa91db712a41903482697fbaf05, type: 2}
+  - {fileID: 11400000, guid: a94fb890c1af1314882230fa7c1b74ac, type: 2}
+  - {fileID: 11400000, guid: bfb572c2e7b359a48801bff0375f254d, type: 2}
+  - {fileID: 11400000, guid: b4383ff24712a084c93c35d4a854e4f2, type: 2}
+  - {fileID: 11400000, guid: 8ece3a010ef7e88479ab7446ed1866fa, type: 2}
+  - {fileID: 11400000, guid: 13bb9a25897f6c746973a9f168335fdd, type: 2}
+  - {fileID: 11400000, guid: 8db752191ad0d3e4d8f5606391d68586, type: 2}

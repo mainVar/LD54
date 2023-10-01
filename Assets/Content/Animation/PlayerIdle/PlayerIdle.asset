@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: PlayerIdle
   m_EditorClassIdentifier: 
   Name: PlayerIdle
-  List: []
+  List:
+  - {fileID: 11400000, guid: efb4ad709ddcc90489dfccb199b5a4f9, type: 2}
+  - {fileID: 11400000, guid: 05f1819b289ca324d8aaa20d9580f361, type: 2}
+  - {fileID: 11400000, guid: 727260f64126e9d44a12fb329adf6cfc, type: 2}
+  - {fileID: 11400000, guid: 9aa2eec5d607d9b41984622d99a63a09, type: 2}
+  - {fileID: 11400000, guid: 2fdc2c85f54dd284dbe2a5ddd7ce232f, type: 2}
+  - {fileID: 11400000, guid: e4e5853bbef26e74596b572b5fbe4cd7, type: 2}
+  - {fileID: 11400000, guid: eb0d2ba19e17f274bbf1a21c3881f628, type: 2}
+  - {fileID: 11400000, guid: dbc59c7373cbe8c4b96f453e4271d007, type: 2}
