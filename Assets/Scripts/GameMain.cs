@@ -293,6 +293,7 @@ namespace LD54 {
                 }
                 else {
                     if (Input.GetMouseButton(0)) {
+
                         for (int i = 0; i < projectilePerShot.value; i++) {
                             var rot = Quaternion.Euler(0, 0, weapon.firePoint.eulerAngles.z + Random.Range(-weapon.spread, weapon.spread));
                             var bullet = ObjectPool.ReuseEntity(weapon.projectile, weapon.firePoint.position, Quaternion.identity);
@@ -302,6 +303,11 @@ namespace LD54 {
                             bullet.SetOwner(owner.Value);
                             
                         }
+                        var muzzle = ObjectPool.ReuseEntity(weapon.muzzle, weapon.firePoint.position, weapon.firePoint.rotation);
+                        var scale = Random.Range(0.8f, 1.2f);
+                        ref var muzzleT = ref muzzle.Get<TransformRef>();
+                        
+                        muzzleT.value.localScale= new Vector3(scale, Random.value > 0.5f ? scale : -scale, 1);
                         SoundManager.Instance.PlaySound(soundData.SoundData);
                         weapon.timer = attackDelay.value;
                     }
