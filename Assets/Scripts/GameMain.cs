@@ -21,7 +21,7 @@ namespace LD54 {
         void Awake() {
             world = new World();
             MonoConverter.Init(world);
-            var grid2D = new Grid2D(8, 11,5 , world, new Vector2(-10,-15));
+            var grid2D = new Grid2D(10, 15,5 , world, new Vector2(-10,-15));
             Injector.AddAsSingle(grid2D);
             Injector.AddAsSingle(animationsHolder);
             update = new Systems(world)
