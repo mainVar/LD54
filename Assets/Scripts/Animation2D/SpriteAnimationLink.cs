@@ -31,7 +31,7 @@ namespace Animation2D {
     }
 
     public static class SpriteAnimationExtensions {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Play(this ref SpriteAnimation animation, string newState, int timesToPlay = Int32.MaxValue) {
             if (animation.currentState != newState) {
                 animation.nextState = animation.currentState;

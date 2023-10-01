@@ -110,6 +110,7 @@ MonoBehaviour:
   - rid: 7459472410658209800
   - rid: 7459472410658209801
   - rid: 4798378729923411968
+  - rid: 4798378729923411972
   runTime: 0
   destroyObject: 0
   destroyComponent: 0
@@ -122,6 +123,9 @@ MonoBehaviour:
       data:
         value:
           id: 0
+    - rid: 4798378729923411972
+      type: {class: Enemy, ns: LD54, asm: Assembly-CSharp}
+      data: 
     - rid: 7459472410658209793
       type: {class: SpriteAnimation, ns: Animation2D, asm: Assembly-CSharp}
       data:

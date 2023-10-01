@@ -22,6 +22,9 @@ namespace LD54 {
         [SerializeField] private GameService gameService;
         
         void Awake() {
+            Configs.PoolsCacheSize = 5000;
+            Configs.EntityCacheSize = 5000;
+            Configs.ComponentCacheSize = 5000;
             world = new World();
             MonoConverter.Init(world);
             var grid2D = new Grid2D(10, 15,5 , world, new Vector2(-10,-15));
@@ -50,6 +53,11 @@ namespace LD54 {
                     .Add(new Animation2DSystem())
                     
                     .Add(new Collision2DPostSystem())
+                    .Add(new DamageSystem())
+                    .Add(new EnemyDeathSystem())
+                    .Add(new PlayerDeathSystem())
+                    
+                    
                     .Add(new Collision2DGroup())
                     .Add(new SyncTransformSystem2())
                     .Add(new RemoveComponentSystem(typeof(EntityConvertedEvent)))
@@ -106,6 +114,7 @@ namespace LD54 {
                 .Without<CollisionPos>()
                 .With<Circle2D>()
                 .With<Pooled>()
+                .With<Damage>()
                 .With<Owner>();
 
             withHealth = world.GetQuery()
@@ -123,7 +132,12 @@ namespace LD54 {
                 var hit = hits.Dequeue();
                 if(hit.From ==-1) continue;
                 Entity entity = world.GetEntity(hit.From);
-                entity.GetOrCreate<CollisionID>().value = hit.Index;
+                Entity entityTo = default;
+                if (hit.Index != -1) {
+                    entityTo = world.GetEntity(hit.Index);
+                    entity.GetOrCreate<CollisionID>().value = hit.Index;
+                }
+
                 entity.GetOrCreate<CollisionPos>().value = hit.Pos;
                 if (projectiles.Has(in entity)) {
                     entity.Get<Pooled>().SetActive(false);
@@ -139,6 +153,13 @@ namespace LD54 {
                     
                     
                     
+                }
+                if (withHealth.Has(in entityTo)) {
+                    world.CreateEntity().Add(new EntityDamagedEvent() {
+                        @from = entity,
+                        to = entityTo,
+                        amount = entity.Get<Damage>().value
+                    });
                 }
                 // if (projectiles.Has(entity.id)) {
                 //     if (!entity.Has<Ricochet>() && !entity.Has<FlyThrough>()) {
@@ -279,9 +300,9 @@ namespace LD54 {
                             dir.value = (rot * Vector3.right).normalized;
                             bullet.Get<TransformComponent>().rotation = rot;
                             bullet.SetOwner(owner.Value);
-                            SoundManager.Instance.PlaySound(soundData.SoundData);
+                            
                         }
-                    
+                        SoundManager.Instance.PlaySound(soundData.SoundData);
                         weapon.timer = attackDelay.value;
                     }
                 }
@@ -372,11 +393,17 @@ namespace LD54 {
         private readonly string[] runStates = new[] { "N", "NW", "W", "SW", "S", "SE", "E", "NE" };
         public override void Update() {
             entities.Without<RotationByMouse>().Each((SpriteAnimation spriteAnimation, InputComponent input, AnimationIndex animationIndex) => {
-                animationIndex.value = DirectionToIndex(new Vector2(input.horizontal, input.vertical));
-                if (animationIndex.value != animationIndex.old) {
-                    spriteAnimation.Play(runStates[animationIndex.value]);
-                    animationIndex.old = animationIndex.value;
+                var dir = new Vector2(input.horizontal, input.vertical);
+                if (dir.magnitude > 0.1f) {
+                    animationIndex.value = DirectionToIndex(dir);
+                    if (animationIndex.value != animationIndex.old) {
+                        if (animationIndex.value < runStates.Length) {
+                            spriteAnimation.Play(runStates[animationIndex.value]);
+                            animationIndex.old = animationIndex.value;
+                        }
+                    }
                 }
+
             });
             
         }
@@ -409,6 +436,59 @@ namespace LD54 {
                 else {
                     pool.SetActive(false);
                 }
+            });
+        }
+    }
+
+    public struct EntityDamagedEvent {
+        public Entity from;
+        public Entity to;
+        public int amount;
+    }
+    [EcsComponent]
+    public struct Damage {
+        public int value;
+    }
+    public struct DeathEvent {}
+    [EcsComponent] public struct Enemy{}
+    partial class DamageSystem : UpdateSystem {
+        private EntityQuery damagedQuery;
+        private Pool<EntityDamagedEvent> damagedEvent;
+        private Pool<Health> healthes;
+        protected override void OnCreate() {
+            damagedQuery = world.GetQuery().With<EntityDamagedEvent>();
+            damagedEvent = world.GetPool<EntityDamagedEvent>();
+            healthes = world.GetPool<Health>();
+        }
+
+        public override void Update() {
+            for (var i = 0; i < damagedQuery.Count; i++) {
+                var entityIndex = damagedQuery.GetEntityIndex(i);
+                ref var damageEvent = ref damagedEvent.Get(entityIndex);
+
+                ref var health = ref damageEvent.to.Get<Health>();
+
+                health.current -= damageEvent.amount;
+                if (health.current <= 0) {
+                    damageEvent.to.Add(new DeathEvent());
+                }
+                world.GetEntity(entityIndex).Destroy();
+            }
+        }
+    }
+
+    partial class EnemyDeathSystem : UpdateSystem {
+        public override void Update() {
+            entities.Each((Entity entity, DeathEvent deathEvent, Enemy enemy, TransformRef transformRef) => {
+                Object.Destroy(transformRef.value.gameObject);
+            });
+        }
+    }
+    partial class PlayerDeathSystem : UpdateSystem {
+        public override void Update() {
+            entities.Each((Entity entity, Pooled pooled, DeathEvent deathEvent, Player enemy) => {
+                pooled.SetActive(false);
+                entity.Remove<DeathEvent>();
             });
         }
     }
