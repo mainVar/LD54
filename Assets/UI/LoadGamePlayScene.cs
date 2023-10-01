@@ -10,8 +10,8 @@ public class LoadGamePlayScene : MonoBehaviour
 
     private void Start()
     {
-        startButton.onClick.AddListener(LoadGameScene);
-        quitButton.onClick.AddListener(CloseGame);
+        if (startButton is not null) startButton.onClick.AddListener(LoadGameScene);
+        if (quitButton is not null) quitButton.onClick.AddListener(CloseGame);
     }
 
     public void PlayAgen()
