@@ -802,7 +802,7 @@ namespace Roguelike.Physics2D {
             return new HitInfo {
                 Pos = new float2(collisionX, collisionY),
                 Normal = normal,
-                From = -1,
+                From = circle.index,
                 Index = -1
             };
         }

@@ -555,6 +555,10 @@ namespace Wargon.ezs {
         public static NativeEntityQuery AsNative(this EntityQuery query) {
             return new NativeEntityQuery(query);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Has(this EntityQuery query, in Entity entity) {
+            return query.Has(entity.id);
+        }
     }
 
     public static class EzAllocator {

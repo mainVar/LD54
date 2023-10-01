@@ -32,6 +32,9 @@ namespace LD54 {
                     .Add(new MoveByInputSystem())
                     .Add(new PrefabSpawnerSystem(prefab))
                     
+                    
+                    .Add(new WeaponShootingSystem())
+                    .Add(new ProjectileMoveSystem())
                     .Add(new RotateByMouseSystem())
                     .Add(new Animation2DRunIdleStatesSystem())
                     .Add(new Animation2DStateDirectionSystem())
@@ -81,7 +84,7 @@ namespace LD54 {
     public struct CollisionID {
         public int value;
     }
-    public partial class Collision2DPostSystem : UpdateSystem {
+    public partial class Collision2DPostSystem : UpdateSystem, IRemoveBefore<CollisionPos>, IRemoveBefore<CollisionID> {
         private EntityQuery projectiles;
         private EntityQuery withHealth;
         [Inject] private Grid2D grid2D;
@@ -111,6 +114,21 @@ namespace LD54 {
                 Entity entity = world.GetEntity(hit.From);
                 entity.GetOrCreate<CollisionID>().value = hit.Index;
                 entity.GetOrCreate<CollisionPos>().value = hit.Pos;
+                if (projectiles.Has(in entity)) {
+                    entity.Get<Pooled>().SetActive(false);
+                    // BULLETS COLLISIONS
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                }
                 // if (projectiles.Has(entity.id)) {
                 //     if (!entity.Has<Ricochet>() && !entity.Has<FlyThrough>()) {
                 //         entity.Get<Pooled>().SetActive(false);
@@ -236,29 +254,66 @@ namespace LD54 {
             });
         }
     }
-    [EcsComponent]
-    public struct Player {
-        
-    }
-    [EcsComponent]
-    public struct Weapon {
-        public MonoEntity value;
+
+    partial class WeaponShootingSystem : UpdateSystem {
+        public override void Update() {
+            var dt = Time.deltaTime;
+            entities.Each((Entity e, Weapon weapon, ProjectilePerShot projectilePerShot, AttackDelay attackDelay, Owner owner) => {
+                if (weapon.timer > 0) {
+                    weapon.timer -= dt;
+                }
+                else {
+                    if (Input.GetMouseButton(0)) {
+                        for (int i = 0; i < projectilePerShot.value; i++) {
+                            var rot = Quaternion.Euler(0, 0, weapon.firePoint.eulerAngles.z + Random.Range(-weapon.spread, weapon.spread));
+                            var bullet = ObjectPool.ReuseEntity(weapon.projectile, weapon.firePoint.position, Quaternion.identity);
+                            ref var dir = ref bullet.GetRef<Direction>();
+                            dir.value = (rot * Vector3.right).normalized;
+                            bullet.Get<TransformComponent>().rotation = rot;
+                            bullet.SetOwner(owner.Value);
+                        }
+                    
+                        weapon.timer = attackDelay.value;
+                    }
+                }
+            });
+        }
     }
 
+    public partial class ProjectileMoveSystem : UpdateSystem
+    {
+        private float dt;
+        public override void Update()
+        {
+            dt = Time.deltaTime;
+            entities.Without<Inactive>().Each((MoveSpeed speed, TransformComponent transform, Direction direction) =>
+            {
+                transform.position += direction.value * speed.value * dt;
+            });
+
+        }
+
+    }
+    
     partial class OnPlayerSpawnSystem : UpdateSystem {
         public override void Update() {
-            entities.Each((Entity e, TransformRef transformRef, Weapon weapon, Player playerTag, EntityConvertedEvent convertedEvent) => {
+            entities.Each((Entity e, TransformRef transformRef, WeaponReference weapon, Player playerTag, EntityConvertedEvent convertedEvent) => {
                 var childEntity = transformRef.value.GetChild(0).GetComponent<MonoEntity>();
                 childEntity.ConvertToEntity();
                 weapon.value = childEntity;
+                weapon.value.Entity.SetOwner(e);
+                Debug.Log("Player Spawned");
             });
         }
     }
     partial class RotateByMouseSystem : UpdateSystem {
         private readonly string[] runStates = new[] { "N", "NW", "W", "SW", "S", "SE", "E", "NE" };
         public override void Update() {
-            entities.Each((SpriteAnimation spriteAnimation, InputComponent input, AnimationIndex animationIndex, Weapon weapon, RotationByMouse mouseTag) => {
+            entities.Each((Entity playerE, SpriteAnimation spriteAnimation, InputComponent input, AnimationIndex animationIndex, WeaponReference weapon, RotationByMouse mouseTag) => {
                 if (!weapon.value.Entity.IsNULL()) {
+                    var e = weapon.value.Entity;
+                    if(!e.HasOwner())
+                        e.SetOwner(playerE);
                     ref var wTransform = ref weapon.value.Entity.Get<TransformRef>();
                     var difference = Wargon.Kit.MousePosition() - wTransform.value.position;
                     difference.Normalize();

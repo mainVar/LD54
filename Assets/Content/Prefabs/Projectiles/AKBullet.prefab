@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2691991170078823811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2515425895725151529}
+  - component: {fileID: 2799522983765416775}
+  - component: {fileID: 6727223474748304868}
+  m_Layer: 0
+  m_Name: AKBullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2515425895725151529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691991170078823811}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.0846767, y: -0.54847187, z: -0.03927634}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2799522983765416775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691991170078823811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a78f753171c0d49accd35a1fc938fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Entity:
+    id: 0
+  Components:
+  - rid: 7459472410658209813
+  - rid: 7459472410658209814
+  - rid: 7459472410658209815
+  - rid: 7459472410658209816
+  - rid: 7459472410658209817
+  runTime: 0
+  destroyObject: 0
+  destroyComponent: 0
+  id: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 7459472410658209813
+      type: {class: Circle2D, ns: Roguelike.Physics2D, asm: Collision2D}
+      data:
+        index: 0
+        cellIndex: 0
+        radius: 0.1
+        position:
+          x: 0
+          y: 0
+        collided: 0
+        trigger: 0
+        layer: 4
+        collideWith: 2
+    - rid: 7459472410658209814
+      type: {class: TransformComponent, ns: , asm: EZSUnity}
+      data:
+        position: {x: 0, y: 0, z: 0}
+        scale: {x: 1, y: 1, z: 1}
+        rotation: {x: 0, y: 0, z: 0, w: 0}
+    - rid: 7459472410658209815
+      type: {class: TransformRef, ns: , asm: EZSUnity}
+      data:
+        value: {fileID: 2515425895725151529}
+    - rid: 7459472410658209816
+      type: {class: MoveSpeed, ns: LD54, asm: Assembly-CSharp}
+      data:
+        value: 32
+    - rid: 7459472410658209817
+      type: {class: Pooled, ns: , asm: Assembly-CSharp}
+      data:
+        Mode: 0
+        poolKey: 0
+        containerIndex: 0
+        CurrentLifeTime: 1
+        IsActive: 0
+        LifeTime: 1
+        mono: {fileID: 2799522983765416775}
+        gameObject: {fileID: 2691991170078823811}
+        transform: {fileID: 2515425895725151529}
+--- !u!212 &6727223474748304868
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691991170078823811}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 1077102320, guid: 536796ec7a392634eae62a5b70ba72d7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.16, y: 0.04}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
