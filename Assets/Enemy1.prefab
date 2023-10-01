@@ -155,6 +155,7 @@ MonoBehaviour:
       data:
         horizontal: 0
         vertical: 0
+        run: 1
     - rid: 7459472410658209800
       type: {class: MoveSpeed, ns: LD54, asm: Assembly-CSharp}
       data:

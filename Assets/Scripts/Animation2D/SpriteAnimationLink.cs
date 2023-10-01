@@ -40,7 +40,13 @@ namespace Animation2D {
                 animation.currentFrames = animation.AnimationList.GetState(newState).Frames;
             }
         }
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void PlayForce(this ref SpriteAnimation animation, string newState, int timesToPlay = Int32.MaxValue) {
+            animation.nextState = animation.currentState;
+            animation.currentState = newState;
+            animation.times = timesToPlay;
+            animation.currentFrames = animation.AnimationList.GetState(newState).Frames;
+        }
         public static void Sub(this ref SpriteAnimation animation, string state, int frame, Action callback) {
             AnimationEvents.Sub(animation.AnimationList.GetState(animation.currentState), frame, callback);
         }

@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Animation2D;
 using Roguelike.Physics2D;
 using Unity.Mathematics;
@@ -5,6 +7,7 @@ using UnityEngine;
 using Wargon.DI;
 using Wargon.ezs;
 using Wargon.ezs.Unity;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace LD54 {
@@ -23,12 +26,17 @@ namespace LD54 {
             Injector.AddAsSingle(animationsHolder);
             update = new Systems(world)
                     
+                    .Add(new OnPlayerSpawnSystem())
                     .Add(new OnSpawnTransformSystem())
                     .Add(new InputSystem())
                     .Add(new MoveByInputSystem())
                     .Add(new PrefabSpawnerSystem(prefab))
+                    
+                    .Add(new RotateByMouseSystem())
+                    .Add(new Animation2DRunIdleStatesSystem())
                     .Add(new Animation2DStateDirectionSystem())
                     .Add(new Animation2DSystem())
+                    
                     .Add(new Collision2DPostSystem())
                     .Add(new Collision2DGroup())
                     .Add(new SyncTransformSystem2())
@@ -64,12 +72,6 @@ namespace LD54 {
             world = null;
             Grid2D.Instance.Clear();
         }
-    }
-
-    [EcsComponent]
-    public struct Health {
-        public int current;
-        public int max;
     }
 
     public struct CollisionPos {
@@ -186,6 +188,7 @@ namespace LD54 {
             {
                 input.horizontal = Input.GetAxis("Horizontal");
                 input.vertical = Input.GetAxis("Vertical");
+                input.run = new Vector2(input.horizontal, input.vertical).magnitude > 0.1f;
             });
         }
     }
@@ -213,21 +216,101 @@ namespace LD54 {
             });
         }
     }
+    
+    partial class Animation2DRunIdleStatesSystem : UpdateSystem {
+        public override void Update() {
+            entities.Each((SpriteAnimation spriteAnimation, InputComponent input, AnimationStates states) => {
+                if (input.run) {
+                    if (states.run.GetInstanceID() != spriteAnimation.AnimationList.GetInstanceID()) {
+                        spriteAnimation.AnimationList = states.run;
+                        spriteAnimation.PlayForce(spriteAnimation.currentState);
+                    }
+                }
+                else {
+                    if (states.idle.GetInstanceID() != spriteAnimation.AnimationList.GetInstanceID()) {
+                        spriteAnimation.AnimationList = states.idle;
+                        spriteAnimation.PlayForce(spriteAnimation.currentState);
+                    }
+                }
+
+            });
+        }
+    }
     [EcsComponent]
-    public struct MoveSpeed {
-        public float value;
+    public struct Player {
+        
+    }
+    [EcsComponent]
+    public struct Weapon {
+        public MonoEntity value;
+    }
+
+    partial class OnPlayerSpawnSystem : UpdateSystem {
+        public override void Update() {
+            entities.Each((Entity e, TransformRef transformRef, Weapon weapon, Player playerTag, EntityConvertedEvent convertedEvent) => {
+                var childEntity = transformRef.value.GetChild(0).GetComponent<MonoEntity>();
+                childEntity.ConvertToEntity();
+                weapon.value = childEntity;
+            });
+        }
+    }
+    partial class RotateByMouseSystem : UpdateSystem {
+        private readonly string[] runStates = new[] { "N", "NW", "W", "SW", "S", "SE", "E", "NE" };
+        public override void Update() {
+            entities.Each((SpriteAnimation spriteAnimation, InputComponent input, AnimationIndex animationIndex, Weapon weapon, RotationByMouse mouseTag) => {
+                if (!weapon.value.Entity.IsNULL()) {
+                    ref var wTransform = ref weapon.value.Entity.Get<TransformRef>();
+                    var difference = Wargon.Kit.MousePosition() - wTransform.value.position;
+                    difference.Normalize();
+                    var rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+                    //var r = getAngle(rotZ);
+                    wTransform.value.rotation = Quaternion.Euler(0, 0, rotZ);
+                    animationIndex.value = DirectionToIndex(difference);
+                    if (animationIndex.value != animationIndex.old) {
+                        spriteAnimation.Play(runStates[animationIndex.value]);
+                        animationIndex.old = animationIndex.value;
+                    }
+                }
+            });
+        }
+        private int DirectionToIndex(Vector2 dir) {
+            var normDir = dir.normalized;
+            float step = 360 / 8;
+            float offset = step / 2;
+            float angle = Vector2.SignedAngle(Vector2.up, normDir);
+
+            angle += offset;
+            if (angle < 0) {
+                angle += 360;
+            }
+
+            float stepCount = angle / step;
+            return Mathf.FloorToInt(stepCount);
+            return 1;
+        }
+        private readonly float[] rots =
+        {
+            -11.25f, -22.5f, -33.75f, -45f, -56.25f, -67.5f, -78.75f, -90f, -101.25f, -112.5f, -123.75f, -135f, -146.25f,
+            -157.5f, -168.75f,
+            0f, 11.25f, 22.5f, 33.75f, 45f, 56.25f, 67.5f, 78.75f, 90f, 101.25f, 112.5f, 123.75f, 135f, 146.25f, 157.5f,
+            168.75f, 180f
+        };
+        private float getAngle(float rot)
+        {
+            return rots.Aggregate((x, y) => Math.Abs(x - rot) < Math.Abs(y - rot) ? x : y);
+        }
     }
     public partial class Animation2DStateDirectionSystem : UpdateSystem {
         private readonly string[] runStates = new[] { "N", "NW", "W", "SW", "S", "SE", "E", "NE" };
         public override void Update() {
-            entities.Each((Entity e, SpriteAnimation spriteAnimation, InputComponent input, AnimationIndex animationIndex) => {
+            entities.Without<RotationByMouse>().Each((SpriteAnimation spriteAnimation, InputComponent input, AnimationIndex animationIndex) => {
                 animationIndex.value = DirectionToIndex(new Vector2(input.horizontal, input.vertical));
                 if (animationIndex.value != animationIndex.old) {
                     spriteAnimation.Play(runStates[animationIndex.value]);
                     animationIndex.old = animationIndex.value;
                 }
-                
             });
+            
         }
 
         private int DirectionToIndex(Vector2 dir) {
@@ -245,16 +328,6 @@ namespace LD54 {
             return Mathf.FloorToInt(stepCount);
             return 1;
         }
-    }
-    [EcsComponent]
-    public struct InputComponent {
-        public float horizontal;
-        public float vertical;
-    }
-    [EcsComponent]
-    public struct AnimationIndex {
-        public int value;
-        public int old;
     }
 }
 
