@@ -17,7 +17,7 @@ namespace LD54 {
         private World world;
         private Systems update;
         private Systems fixedUpdate;
-        [SerializeField] GameObject prefab;
+        [SerializeField] MonoEntity prefab;
         [SerializeField] private AnimationsHolder animationsHolder;
         [SerializeField] private GameService gameService;
         
@@ -184,9 +184,9 @@ namespace LD54 {
     partial class PrefabSpawnerSystem : UpdateSystem {
         private float time = 0.001f;
         private float timer;
-        private GameObject prefab;
+        private MonoEntity prefab;
         private bool spawn;
-        public PrefabSpawnerSystem(GameObject prefab) {
+        public PrefabSpawnerSystem(MonoEntity prefab) {
             this.prefab = prefab;}
         public override void Update() {
             timer -= Time.deltaTime;
@@ -199,19 +199,19 @@ namespace LD54 {
                 pos.y += Random.Range(-0.1f, 0.1f);
                 //for (int i = 0; i < 6; i++) {
                 //var pos = RandomPointOnCircleEdge(19,Camera.main.transform.position);
-                Object.Instantiate(prefab, pos, Quaternion.identity);
+                ObjectPool.ReuseEntity(prefab, pos, Quaternion.identity);
             }
 
             if (Input.GetKey(KeyCode.R)) {
                 var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 pos.z = 0;
-                var cached = Cast.CircleOverlap(pos, 6F, out int count);
+                var cached = Cast.CircleOverlap(pos, 2F, out int count);
                 for (int i = 0; i < count; i++) {
                     var hit = cached[i];
                     var e = world.GetEntity(hit.Index);
                     if (!e.IsNULL()) {
-                        Object.Destroy(e.Get<TransformRef>().value.gameObject);
-                        e.Destroy();
+                        if(e.Has<Pooled>())
+                            e.Get<Pooled>().SetActive(false);
                     }
 
                 }
