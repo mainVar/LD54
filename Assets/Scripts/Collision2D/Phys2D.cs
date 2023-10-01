@@ -790,10 +790,8 @@ namespace Roguelike.Physics2D {
                 normal = new float2(deltaX / distance, deltaY / distance);
             }
             
-            
-            
             // Move the circle away from the rectangle along the collision vector
-            circle.position += normal * overlap;
+            circle.position += normal * overlap + 0.01f;
                 
             float collisionX = circle.position.x - normal.x * circle.radius;
             float collisionY = circle.position.y - normal.y * circle.radius;

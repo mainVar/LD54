@@ -31,6 +31,7 @@ namespace LD54 {
                     .Add(new OnPlayerSpawnSystem())
                     .Add(new InputSystem())
                     .Add(new EnemyAISystem())
+                    .Add(new PoolLifetimeSystem())
                     .Add(new MoveByInputSystem())
                     
                     .Add(new PrefabSpawnerSystem(prefab))
@@ -87,7 +88,10 @@ namespace LD54 {
     public struct CollisionID {
         public int value;
     }
-    public partial class Collision2DPostSystem : UpdateSystem, IRemoveBefore<CollisionPos>, IRemoveBefore<CollisionID> {
+    partial class Collision2DPostSystem : UpdateSystem, 
+        IRemoveBefore<CollisionPos>, 
+        IRemoveBefore<CollisionID> 
+    {
         private EntityQuery projectiles;
         private EntityQuery withHealth;
         [Inject] private Grid2D grid2D;
@@ -198,17 +202,18 @@ namespace LD54 {
         }
     }
 
-    public partial class InputSystem : UpdateSystem {
+    partial class InputSystem : UpdateSystem {
         public override void Update() {
-            entities.Without<Inactive>().Each((InputComponent input) =>
-            {
-                input.horizontal = Input.GetAxis("Horizontal");
-                input.vertical = Input.GetAxis("Vertical");
+            entities.Without<Inactive>().Each((InputComponent input) => {
+                var h = Input.GetAxis("Horizontal");
+                var v = Input.GetAxis("Vertical");
+                input.horizontal = h > 0 ? 1 : h < 0 ? -1 : 0;
+                input.vertical =  v > 0 ? 1 : v < 0 ? -1 : 0;
                 input.run = new Vector2(input.horizontal, input.vertical).magnitude > 0.1f;
             });
         }
     }
-    public partial class MoveByInputSystem : UpdateSystem {
+    partial class MoveByInputSystem : UpdateSystem {
         private const float MINIMUM_INPUT = 0.01f;
         public override void Update() {
             var dt = Time.deltaTime;
@@ -278,7 +283,7 @@ namespace LD54 {
         }
     }
 
-    public partial class ProjectileMoveSystem : UpdateSystem
+    partial class ProjectileMoveSystem : UpdateSystem
     {
         private float dt;
         public override void Update()
@@ -302,6 +307,7 @@ namespace LD54 {
             });
         }
     }
+    
     partial class RotateByMouseSystem : UpdateSystem {
         private readonly string[] runStates = new[] { "N", "NW", "W", "SW", "S", "SE", "E", "NE" };
         public override void Update() {
@@ -351,7 +357,7 @@ namespace LD54 {
             return rots.Aggregate((x, y) => Math.Abs(x - rot) < Math.Abs(y - rot) ? x : y);
         }
     }
-    public partial class Animation2DStateDirectionSystem : UpdateSystem {
+    partial class Animation2DStateDirectionSystem : UpdateSystem {
         private readonly string[] runStates = new[] { "N", "NW", "W", "SW", "S", "SE", "E", "NE" };
         public override void Update() {
             entities.Without<RotationByMouse>().Each((SpriteAnimation spriteAnimation, InputComponent input, AnimationIndex animationIndex) => {
@@ -378,6 +384,21 @@ namespace LD54 {
             float stepCount = angle / step;
             return Mathf.FloorToInt(stepCount);
             return 1;
+        }
+    }
+
+    partial class PoolLifetimeSystem : UpdateSystem {
+        public override void Update() {
+            var dt = Time.deltaTime;
+            entities.Each((Pooled pool) => {
+
+                if (pool.CurrentLifeTime > 0f) {
+                    pool.CurrentLifeTime -= dt;
+                }
+                else {
+                    pool.SetActive(false);
+                }
+            });
         }
     }
 }
