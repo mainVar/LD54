@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Animation2D;
+using LD54.Sound;
 using Roguelike.Physics2D;
 using Unity.Mathematics;
 using UnityEngine;
@@ -265,7 +266,7 @@ namespace LD54 {
     partial class WeaponShootingSystem : UpdateSystem {
         public override void Update() {
             var dt = Time.deltaTime;
-            entities.Each((Entity e, Weapon weapon, ProjectilePerShot projectilePerShot, AttackDelay attackDelay, Owner owner) => {
+            entities.Each((Entity e, Weapon weapon, ProjectilePerShot projectilePerShot, AttackDelay attackDelay, Owner owner, ShootingSound soundData) => {
                 if (weapon.timer > 0) {
                     weapon.timer -= dt;
                 }
@@ -278,6 +279,7 @@ namespace LD54 {
                             dir.value = (rot * Vector3.right).normalized;
                             bullet.Get<TransformComponent>().rotation = rot;
                             bullet.SetOwner(owner.Value);
+                            SoundManager.Instance.PlaySound(soundData.SoundData);
                         }
                     
                         weapon.timer = attackDelay.value;

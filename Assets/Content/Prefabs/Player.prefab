@@ -52,6 +52,7 @@ MonoBehaviour:
   - rid: 7459472410658209809
   - rid: 7459472410658209811
   - rid: 7459472410658209812
+  - rid: 8237072761476612097
   runTime: 0
   destroyObject: 0
   destroyComponent: 0
@@ -78,6 +79,10 @@ MonoBehaviour:
       type: {class: ProjectilePerShot, ns: LD54, asm: Assembly-CSharp}
       data:
         value: 1
+    - rid: 8237072761476612097
+      type: {class: ShootingSound, ns: LD54, asm: Assembly-CSharp}
+      data:
+        SoundData: {fileID: 11400000, guid: fa9c37a44c09ff142a900032dd0cef81, type: 2}
 --- !u!1 &4228159704719999907
 GameObject:
   m_ObjectHideFlags: 0
