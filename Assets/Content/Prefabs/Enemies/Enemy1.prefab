@@ -109,6 +109,7 @@ MonoBehaviour:
   - rid: 7459472410658209799
   - rid: 7459472410658209800
   - rid: 7459472410658209801
+  - rid: 4798378729923411968
   runTime: 0
   destroyObject: 0
   destroyComponent: 0
@@ -116,6 +117,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 4798378729923411968
+      type: {class: Target, ns: LD54, asm: Assembly-CSharp}
+      data:
+        value:
+          id: 0
     - rid: 7459472410658209793
       type: {class: SpriteAnimation, ns: Animation2D, asm: Assembly-CSharp}
       data:
@@ -159,7 +165,7 @@ MonoBehaviour:
     - rid: 7459472410658209800
       type: {class: MoveSpeed, ns: LD54, asm: Assembly-CSharp}
       data:
-        value: 2
+        value: 3.5
     - rid: 7459472410658209801
       type: {class: Circle2D, ns: Roguelike.Physics2D, asm: Collision2D}
       data:

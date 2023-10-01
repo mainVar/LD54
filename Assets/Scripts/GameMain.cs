@@ -26,10 +26,13 @@ namespace LD54 {
             Injector.AddAsSingle(animationsHolder);
             update = new Systems(world)
                     
-                    .Add(new OnPlayerSpawnSystem())
+                    
                     .Add(new OnSpawnTransformSystem())
+                    .Add(new OnPlayerSpawnSystem())
                     .Add(new InputSystem())
+                    .Add(new EnemyAISystem())
                     .Add(new MoveByInputSystem())
+                    
                     .Add(new PrefabSpawnerSystem(prefab))
                     
                     
@@ -88,7 +91,6 @@ namespace LD54 {
         private EntityQuery projectiles;
         private EntityQuery withHealth;
         [Inject] private Grid2D grid2D;
-
         protected override void OnCreate() {
             projectiles = world.GetQuery()
                 .Without<Inactive>()
@@ -141,11 +143,7 @@ namespace LD54 {
 
     partial class OnSpawnTransformSystem : UpdateSystem {
         public override void Update() {
-            entities.Each((TransformComponent TransformComponent, TransformRef transformRef, PooledEvent s) => {
-                TransformComponent.position = transformRef.value.position;
-                TransformComponent.rotation = transformRef.value.rotation;
-                TransformComponent.scale = transformRef.value.localScale;
-            });
+
             entities.Each((TransformComponent TransformComponent, TransformRef transformRef, EntityConvertedEvent s) => {
                 TransformComponent.position = transformRef.value.position;
                 TransformComponent.rotation = transformRef.value.rotation;
@@ -290,9 +288,7 @@ namespace LD54 {
             {
                 transform.position += direction.value * speed.value * dt;
             });
-
         }
-
     }
     
     partial class OnPlayerSpawnSystem : UpdateSystem {
@@ -312,8 +308,8 @@ namespace LD54 {
             entities.Each((Entity playerE, SpriteAnimation spriteAnimation, InputComponent input, AnimationIndex animationIndex, WeaponReference weapon, RotationByMouse mouseTag) => {
                 if (!weapon.value.Entity.IsNULL()) {
                     var e = weapon.value.Entity;
-                    if(!e.HasOwner())
-                        e.SetOwner(playerE);
+                    // if(!e.HasOwner())
+                    //     e.SetOwner(playerE);
                     ref var wTransform = ref weapon.value.Entity.Get<TransformRef>();
                     var difference = Wargon.Kit.MousePosition() - wTransform.value.position;
                     difference.Normalize();

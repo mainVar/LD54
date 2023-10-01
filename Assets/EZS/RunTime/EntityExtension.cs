@@ -40,6 +40,7 @@ namespace Wargon.ezs {
             var typeId = ComponentType<Owner>.ID;
             var pool = e.World.OwnerPool;
             var nativePool = e.World.OwnerNativePool;
+            if(pool.Get(e.id).Value.id == newOwner.id) return;
             if (data.archetype.owner == -1) {
                 pool.Set(new Owner{Value = newOwner}, e.id);
                 pool.Add(e.id);

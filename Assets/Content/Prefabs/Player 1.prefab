@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3237583014585720894
+--- !u!1 &210693094036399169
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,85 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7172929147146156797}
-  - component: {fileID: 7721010678851911300}
-  m_Layer: 0
-  m_Name: Weapon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7172929147146156797
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3237583014585720894}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.192, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6548055436135123832}
-  m_Father: {fileID: 4924214461205588580}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7721010678851911300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3237583014585720894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6a78f753171c0d49accd35a1fc938fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Entity:
-    id: 0
-  Components:
-  - rid: 7459472410658209806
-  - rid: 7459472410658209809
-  - rid: 7459472410658209811
-  - rid: 7459472410658209812
-  runTime: 0
-  destroyObject: 0
-  destroyComponent: 0
-  id: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: 7459472410658209806
-      type: {class: TransformRef, ns: , asm: EZSUnity}
-      data:
-        value: {fileID: 7172929147146156797}
-    - rid: 7459472410658209809
-      type: {class: Weapon, ns: LD54, asm: Assembly-CSharp}
-      data:
-        projectile: {fileID: 2799522983765416775, guid: ad60b937badafe0468d0af8483e6c1d1, type: 3}
-        firePoint: {fileID: 6548055436135123832}
-        spread: 0
-        timer: 0
-    - rid: 7459472410658209811
-      type: {class: AttackDelay, ns: LD54, asm: Assembly-CSharp}
-      data:
-        value: 0.05
-    - rid: 7459472410658209812
-      type: {class: ProjectilePerShot, ns: LD54, asm: Assembly-CSharp}
-      data:
-        value: 1
---- !u!1 &4228159704719999907
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6548055436135123832}
+  - component: {fileID: 2020711394069521816}
   m_Layer: 0
   m_Name: FirePoint
   m_TagString: Untagged
@@ -94,22 +16,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6548055436135123832
+--- !u!4 &2020711394069521816
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4228159704719999907}
+  m_GameObject: {fileID: 210693094036399169}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.593, y: 0.007, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7172929147146156797}
+  m_Father: {fileID: 1379632719488924246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8782413723394412949
+--- !u!1 &1137980817032703117
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,39 +39,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4924214461205588580}
-  - component: {fileID: 875268438993420330}
-  - component: {fileID: 8351753521502827654}
+  - component: {fileID: 4404341815763590724}
+  - component: {fileID: 987002617059383705}
+  - component: {fileID: 6413263108248012619}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player 1
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: a3de9d1408f25449bb288eebcebfb832, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4924214461205588580
+--- !u!4 &4404341815763590724
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8782413723394412949}
+  m_GameObject: {fileID: 1137980817032703117}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.69, y: -0.74, z: 0.1205885}
+  m_LocalPosition: {x: 7.41, y: -0.68, z: 0.1205885}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7172929147146156797}
+  - {fileID: 1379632719488924246}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &875268438993420330
+--- !u!212 &987002617059383705
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8782413723394412949}
+  m_GameObject: {fileID: 1137980817032703117}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -195,13 +117,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8351753521502827654
+--- !u!114 &6413263108248012619
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8782413723394412949}
+  m_GameObject: {fileID: 1137980817032703117}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6a78f753171c0d49accd35a1fc938fa, type: 3}
@@ -243,11 +165,11 @@ MonoBehaviour:
     - rid: 7459472410658209794
       type: {class: SpriteRender, ns: Animation2D, asm: Assembly-CSharp}
       data:
-        value: {fileID: 875268438993420330}
+        value: {fileID: 987002617059383705}
     - rid: 7459472410658209795
       type: {class: TransformRef, ns: , asm: EZSUnity}
       data:
-        value: {fileID: 4924214461205588580}
+        value: {fileID: 4404341815763590724}
     - rid: 7459472410658209796
       type: {class: TransformComponent, ns: , asm: EZSUnity}
       data:
@@ -302,3 +224,81 @@ MonoBehaviour:
     - rid: 7459472410658209818
       type: {class: Player, ns: LD54, asm: Assembly-CSharp}
       data: 
+--- !u!1 &8312461922601106352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1379632719488924246}
+  - component: {fileID: 4085564916637134840}
+  m_Layer: 0
+  m_Name: Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1379632719488924246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312461922601106352}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.192, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2020711394069521816}
+  m_Father: {fileID: 4404341815763590724}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4085564916637134840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312461922601106352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a78f753171c0d49accd35a1fc938fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Entity:
+    id: 0
+  Components:
+  - rid: 7459472410658209806
+  - rid: 7459472410658209809
+  - rid: 7459472410658209811
+  - rid: 7459472410658209812
+  runTime: 0
+  destroyObject: 0
+  destroyComponent: 0
+  id: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 7459472410658209806
+      type: {class: TransformRef, ns: , asm: EZSUnity}
+      data:
+        value: {fileID: 1379632719488924246}
+    - rid: 7459472410658209809
+      type: {class: Weapon, ns: LD54, asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 2799522983765416775, guid: ad60b937badafe0468d0af8483e6c1d1, type: 3}
+        firePoint: {fileID: 2020711394069521816}
+        spread: 0
+        timer: 0
+    - rid: 7459472410658209811
+      type: {class: AttackDelay, ns: LD54, asm: Assembly-CSharp}
+      data:
+        value: 0.05
+    - rid: 7459472410658209812
+      type: {class: ProjectilePerShot, ns: LD54, asm: Assembly-CSharp}
+      data:
+        value: 1

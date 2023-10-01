@@ -304,8 +304,8 @@ namespace Wargon.ezs {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TransferOwnerAdd(ref EntityData entity, int component, int owner) {
             if (OwnerEdges.TryGetValue(owner, out OwnerEdge edge)) {
-                entity.archetype = edge.buffer.toMove;
                 world.AddDirtyEntity(entity.id, edge.buffer);
+                entity.archetype = edge.buffer.toMove;
                 return;
             }
             CreateOwnerEdge(component, owner, out edge);
