@@ -13,8 +13,6 @@ namespace LD54.Sound
         private List<AudioSource> musicSources = new List<AudioSource>();
         private List<AudioSource> soundEffectSources = new List<AudioSource>();
 
-        private bool isMusicEnabled = true;
-        private bool isSoundEffectsEnabled = true;
         private float effectsVolume;
         private float musicVolume;
 
@@ -33,31 +31,14 @@ namespace LD54.Sound
                 Destroy(gameObject);
             }
         }
-
-        public void ToggleMusic()
-        {
-            isMusicEnabled = !isMusicEnabled;
-
-            if (isMusicEnabled)
-            {
-                musicVolume = GetMusicVolume();
-                SetMusicVolume(musicVolume);
-            }
-            else
-            {
-                musicVolume = GetMusicVolume();
-                SetMusicVolume(0.0f);
-            }
-        }
-
-        public void SetMusicVolume(float volume)
+        
+        public void SetMusicVolume()
         {
             foreach (AudioSource musicSource in musicSources)
             {
-                musicSource.volume = volume;
+                musicSource.volume = musicSlider.value;
             }
-
-            musicSlider.value = volume;
+            
             musicVolume = musicSlider.value;
         }
 
@@ -70,35 +51,7 @@ namespace LD54.Sound
 
             effectsVolume = effectSlider.value;
         }
-
-        /// <summary>
-        /// Get sound volume 1 sound source
-        /// </summary>
-        /// <returns></returns>
-        public float GetMusicVolume()
-        {
-            if (musicSources.Count > 0)
-            {
-                return musicSources[0].volume;
-            }
-
-            return 0.0f;
-        }
-
-        public void ToggleSoundEffects()
-        {
-            isSoundEffectsEnabled = !isSoundEffectsEnabled;
-
-            if (!isSoundEffectsEnabled)
-            {
-                for (int i = soundEffectSources.Count - 1; i >= 0; i--)
-                {
-                    Destroy(soundEffectSources[i]);
-                    soundEffectSources.RemoveAt(i);
-                }
-            }
-        }
-
+        
         public void PlaySound(SoundData soundData)
         {
             if (soundData == null)
@@ -106,13 +59,7 @@ namespace LD54.Sound
                 Debug.LogWarning("Trying to play a null SoundData.");
                 return;
             }
-
-            if ((soundData.soundType == SoundType.Music && !isMusicEnabled) ||
-                (soundData.soundType == SoundType.SoundEffect && !isSoundEffectsEnabled))
-            {
-                return;
-            }
-
+            
             AudioSource source = gameObject.AddComponent<AudioSource>();
             source.clip = soundData.audioClip;
 
