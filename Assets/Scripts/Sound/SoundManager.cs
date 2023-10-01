@@ -1,21 +1,28 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace LD54.Sound
 {
     public class SoundManager : MonoBehaviour
     {
         public static SoundManager Instance;
+        public Slider effectSlider;
+        public Slider musicSlider;
 
         private List<AudioSource> musicSources = new List<AudioSource>();
         private List<AudioSource> soundEffectSources = new List<AudioSource>();
 
         private bool isMusicEnabled = true;
         private bool isSoundEffectsEnabled = true;
-        private float savedMusicVolume = 1.0f; 
+        private float effectsVolume;
+        private float musicVolume;
 
         private void Awake()
         {
+            musicVolume = musicSlider.value;
+            effectsVolume = effectSlider.value;
+
             if (Instance == null)
             {
                 Instance = this;
@@ -33,20 +40,35 @@ namespace LD54.Sound
 
             if (isMusicEnabled)
             {
-                SetMusicVolume(savedMusicVolume);
+                musicVolume = GetMusicVolume();
+                SetMusicVolume(musicVolume);
             }
             else
             {
-                savedMusicVolume = GetMusicVolume();
+                musicVolume = GetMusicVolume();
                 SetMusicVolume(0.0f);
             }
         }
+
         public void SetMusicVolume(float volume)
         {
             foreach (AudioSource musicSource in musicSources)
             {
                 musicSource.volume = volume;
             }
+
+            musicSlider.value = volume;
+            musicVolume = musicSlider.value;
+        }
+
+        public void SetEffectVolume()
+        {
+            foreach (AudioSource soundEffect in soundEffectSources)
+            {
+                soundEffect.volume = effectSlider.value;
+            }
+
+            effectsVolume = effectSlider.value;
         }
 
         /// <summary>
@@ -57,8 +79,9 @@ namespace LD54.Sound
         {
             if (musicSources.Count > 0)
             {
-                return musicSources[0].volume; 
+                return musicSources[0].volume;
             }
+
             return 0.0f;
         }
 
@@ -96,10 +119,12 @@ namespace LD54.Sound
             if (soundData.soundType == SoundType.Music)
             {
                 source.loop = true;
+                source.volume = musicVolume;
                 musicSources.Add(source);
             }
             else
             {
+                source.volume = effectsVolume;
                 soundEffectSources.Add(source);
             }
 
