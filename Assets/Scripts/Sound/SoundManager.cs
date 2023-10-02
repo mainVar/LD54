@@ -71,6 +71,14 @@ namespace LD54.Sound
 
             effectsVolume = effectSlider.value;
         }
+
+        private void KillMusic()
+        {
+            foreach (var musicSource in musicSources)
+            {
+                Destroy(musicSource);
+            }
+        }
         
         public void PlaySound(SoundData soundData)
         {
@@ -87,6 +95,7 @@ namespace LD54.Sound
             {
                 source.loop = true;
                 source.volume = musicVolume;
+                KillMusic();
                 musicSources.Add(source);
             }
             else

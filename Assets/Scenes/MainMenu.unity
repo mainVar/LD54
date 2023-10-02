@@ -574,19 +574,7 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 37682430}
-        m_TargetAssemblyTypeName: LD54.Sound.SoundManager, Assembly-CSharp
-        m_MethodName: SetEffectVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &335540591
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,7 +893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd71fdbd72ffc6b469d40fb7cdc34d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundData: {fileID: 11400000, guid: 38d9af8b5833d1945b718e06c6bdf59f, type: 2}
+  soundData: {fileID: 11400000, guid: 07d06578815054846a3a1c65e7cbcd02, type: 2}
 --- !u!114 &526494380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3702,19 +3690,7 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 37682430}
-        m_TargetAssemblyTypeName: LD54.Sound.SoundManager, Assembly-CSharp
-        m_MethodName: SetMusicVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &2071199091
 GameObject:
   m_ObjectHideFlags: 0
