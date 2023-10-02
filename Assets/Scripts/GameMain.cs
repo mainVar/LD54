@@ -64,6 +64,7 @@ namespace LD54 {
                     .Add(new RemoveComponentSystem(typeof(EntityConvertedEvent)))
                     .Add(new RemoveComponentSystem(typeof(PooledEvent)))
                     .Add(new RoomSpawnerSystem())
+                    .Add(new PlayerWinLevelSystem())
                 ;
             update.Init();
             // fixedUpdate = new Systems(world)

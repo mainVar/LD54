@@ -11,6 +11,7 @@ public class UiController : MonoBehaviour
 {
     [SerializeField] private Image _newGameButton;
     [SerializeField] private GameObject _gameOver;
+    [SerializeField] private GameObject _winLevelWindow;
     [SerializeField] private TextMeshProUGUI KillsCount;
 
     private Animator comboAnimator;
@@ -53,4 +54,11 @@ public class UiController : MonoBehaviour
         _gameOver.SetActive(true);
         Time.timeScale = 0;
     }
+
+    public void PlayerWin()
+    {
+        Time.timeScale = 0;
+        _winLevelWindow.SetActive(true);
+    }
+    
 }

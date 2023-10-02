@@ -13,6 +13,7 @@ namespace LD54 {
         private EntityQuery player;
         private EntityQuery enemiesThatCanAttack;
         private EntityQuery activeRoom;
+        private EntityQuery winCollide;
         
         [Inject] private Grid2D grid2D;
         protected override void OnCreate() {
@@ -40,6 +41,11 @@ namespace LD54 {
                 .Without<Inactive>()
                 .With<Circle2D>()
                 .With<ActiveRoom>();
+            
+            winCollide = world.GetQuery()
+                .Without<Inactive>()
+                .With<Circle2D>()
+                .With<WinColliderZone>();
         }
 
         public override void Update() {
@@ -82,6 +88,11 @@ namespace LD54 {
                 if (activeRoom.Has(in entityTo) && entityFrom.Has<Player>())
                 {
                     entityTo.Add(new EnableRoomSpawner());
+                }
+                
+                if (winCollide.Has(in entityTo) && entityFrom.Has<Player>())
+                {
+                    entityTo.Add(new PlayerWin());
                 }
                 
                 // if (projectiles.Has(entity.id)) {

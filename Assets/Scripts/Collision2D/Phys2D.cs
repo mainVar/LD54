@@ -788,7 +788,8 @@ namespace Roguelike.Physics2D {
         PlayerProjectle = 1 << 2,
         EnemyProjectile = 1 << 3,
         Bonus = 1 << 4,
-        DoorTrigger = 1 <<5
+        DoorTrigger = 1 << 5,
+        WinCollider = 1 << 6,
     }
     [StructLayout(LayoutKind.Sequential)]
     public struct Grid2DCell {
