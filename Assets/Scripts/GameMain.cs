@@ -11,6 +11,7 @@ namespace LD54 {
         private World world;
         private Systems update;
         private Systems fixedUpdate;
+        [SerializeField] private BakedParticles bakedParticles;
         [SerializeField] MonoEntity prefab;
         [SerializeField] private AnimationsHolder animationsHolder;
         [SerializeField] private GameService gameService;
@@ -31,6 +32,7 @@ namespace LD54 {
             Injector.AddAsSingle(grid2D);
             Injector.AddAsSingle(animationsHolder);
             Injector.AddAsSingle(gameService);
+            Injector.AddAsSingle(bakedParticles);
             Injector.AddAsSingle(this);
             update = new Systems(world)
                     
@@ -94,6 +96,16 @@ namespace LD54 {
             grid2D.Clear();
             Injector.Dispose();
         }
+    }
+
+    [EcsComponent]
+    public struct Impact {
+        public string key;
+    }
+    
+    [EcsComponent]
+    public struct DeathEffect {
+        public string value;
     }
 }
 

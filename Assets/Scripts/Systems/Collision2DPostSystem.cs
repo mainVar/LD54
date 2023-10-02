@@ -16,6 +16,7 @@ namespace LD54 {
         private EntityQuery winCollide;
         
         [Inject] private Grid2D grid2D;
+        [Inject] private BakedParticles particles;
         protected override void OnCreate() {
             projectiles = world.GetQuery()
                 .Without<Inactive>()
@@ -37,6 +38,7 @@ namespace LD54 {
                 .With<Circle2D>()
                 .With<Health>();
 
+
             activeRoom = world.GetQuery()
                 .Without<Inactive>()
                 .With<Circle2D>()
@@ -46,6 +48,7 @@ namespace LD54 {
                 .Without<Inactive>()
                 .With<Circle2D>()
                 .With<WinColliderZone>();
+
         }
 
         public override void Update() {
@@ -65,7 +68,7 @@ namespace LD54 {
                 if (projectiles.Has(in entityFrom)) {
                     entityFrom.Get<Pooled>().SetActive(false);
                     // BULLETS COLLISIONS
-                    
+                    particles.Show("Enemy1Death", entityFrom.Get<TransformComponent>().position);
                     
                 }
                 if (enemies.Has(in entityTo)) {
@@ -77,13 +80,14 @@ namespace LD54 {
                 }
 
                 if (player.Has(in entityTo) && entityFrom.Has<CanAttack>()) {
-                    world.CreateEntity().Add(new EntityDamagedEvent() {
+                    world.CreateEntity().Add(new EntityDamagedEvent {
                         @from = entityFrom,
                         to = entityTo,
                         amount = entityFrom.Get<Damage>().value
                     });
                     entityFrom.Remove<CanAttack>();
                 }
+
 
                 if (activeRoom.Has(in entityTo) && entityFrom.Has<Player>())
                 {

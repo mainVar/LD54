@@ -116,6 +116,7 @@ MonoBehaviour:
   - rid: 4798378729923411975
   - rid: 4798378729923411978
   - rid: 4798378729923411979
+  - rid: 4798378757660344320
   runTime: 0
   destroyObject: 0
   destroyComponent: 0
@@ -156,6 +157,10 @@ MonoBehaviour:
       data:
         delay: 0.25
         delayCounter: 0.25
+    - rid: 4798378757660344320
+      type: {class: DeathEffect, ns: LD54, asm: Assembly-CSharp}
+      data:
+        value: Enemy1Death
     - rid: 7459472410658209793
       type: {class: SpriteAnimation, ns: Animation2D, asm: Assembly-CSharp}
       data:
