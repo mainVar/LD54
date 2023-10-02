@@ -1,4 +1,5 @@
 ﻿using Roguelike.Physics2D;
+using UnityEngine;
 using Wargon.ezs;
 using Wargon.ezs.Unity;
 
@@ -11,6 +12,8 @@ namespace LD54 {
         private EntityQuery enemies;
         private EntityQuery player;
         private EntityQuery enemiesThatCanAttack;
+        private EntityQuery activeRoom;
+        
         [Inject] private Grid2D grid2D;
         protected override void OnCreate() {
             projectiles = world.GetQuery()
@@ -33,6 +36,10 @@ namespace LD54 {
                 .With<Circle2D>()
                 .With<Health>();
 
+            activeRoom = world.GetQuery()
+                .Without<Inactive>()
+                .With<Circle2D>()
+                .With<ActiveRoom>();
         }
 
         public override void Update() {
@@ -54,15 +61,6 @@ namespace LD54 {
                     // BULLETS COLLISIONS
                     
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                 }
                 if (enemies.Has(in entityTo)) {
                     world.CreateEntity().Add(new EntityDamagedEvent() {
@@ -80,6 +78,12 @@ namespace LD54 {
                     });
                     entityFrom.Remove<CanAttack>();
                 }
+
+                if (activeRoom.Has(in entityTo) && entityFrom.Has<Player>())
+                {
+                    entityTo.Add(new EnableRoomSpawner());
+                }
+                
                 // if (projectiles.Has(entity.id)) {
                 //     if (!entity.Has<Ricochet>() && !entity.Has<FlyThrough>()) {
                 //         entity.Get<Pooled>().SetActive(false);

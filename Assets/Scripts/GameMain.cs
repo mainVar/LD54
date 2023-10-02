@@ -63,6 +63,7 @@ namespace LD54 {
                     .Add(new SyncTransformSystem2())
                     .Add(new RemoveComponentSystem(typeof(EntityConvertedEvent)))
                     .Add(new RemoveComponentSystem(typeof(PooledEvent)))
+                    .Add(new RoomSpawnerSystem())
                 ;
             update.Init();
             // fixedUpdate = new Systems(world)
