@@ -27,19 +27,19 @@ namespace LD54 {
         void Awake() {
             Application.targetFrameRate = 1400;
             QualitySettings.vSyncCount = 0;
-            Configs.PoolsCacheSize = 5000;
-            Configs.EntityCacheSize = 5000;
-            Configs.ComponentCacheSize = 5000;
+            // Configs.PoolsCacheSize = 5000;
+            // Configs.EntityCacheSize = 5000;
+            // Configs.ComponentCacheSize = 5000;
             world = new World();
             MonoConverter.Init(world);
-            var grid2D = new Grid2D(8, 6,5 , world, new Vector2(-10,-15));
+            var grid2D = new Grid2D(16, 16,5 , world, new Vector2(-10,-12));
             Injector.AddAsSingle(grid2D);
             Injector.AddAsSingle(animationsHolder);
             Injector.AddAsSingle(gameService);
             Injector.AddAsSingle(this);
             update = new Systems(world)
                     
-                    
+                    .Add(new CameraAimSystem())
                     .Add(new OnSpawnTransformSystem())
                     .Add(new OnPlayerSpawnSystem())
                     .Add(new InputSystem())
@@ -57,7 +57,7 @@ namespace LD54 {
                     .Add(new Animation2DStateDirectionSystem())
                     .Add(new Animation2DSystem())
                     
-                    .Add(new UpdateCollisionGridPosition())
+                    //.Add(new UpdateCollisionGridPosition())
                     .Add(new Collision2DPostSystem())
                     .Add(new DamageSystem())
                     .Add(new EnemyDeathSystem())
@@ -279,22 +279,20 @@ namespace LD54 {
         private const float MINIMUM_INPUT = 0.01f;
         public override void Update() {
             var dt = Time.deltaTime;
-            entities.Without<Inactive>().Each((TransformComponent transform, InputComponent input, MoveSpeed speed, Circle2D circle2D) =>
+            entities.Without<Inactive>().Each((TransformComponent transform, InputComponent input, MoveSpeed speed) =>
             {
-                if (!circle2D.collided) {
-                    float trueMoveSpeed;
+                float trueMoveSpeed;
 
-                    if (Mathf.Abs(input.horizontal) > MINIMUM_INPUT && Mathf.Abs(input.vertical) > MINIMUM_INPUT)
-                        trueMoveSpeed = speed.value * 0.75f;
-                    else
-                        trueMoveSpeed = speed.value;
-            
-                    if (input.horizontal > MINIMUM_INPUT || input.horizontal < -MINIMUM_INPUT)
-                        transform.position += new Vector3(input.horizontal * trueMoveSpeed * dt, 0);
+                if (Mathf.Abs(input.horizontal) > MINIMUM_INPUT && Mathf.Abs(input.vertical) > MINIMUM_INPUT)
+                    trueMoveSpeed = speed.value * 0.75f;
+                else
+                    trueMoveSpeed = speed.value;
+        
+                if (input.horizontal > MINIMUM_INPUT || input.horizontal < -MINIMUM_INPUT)
+                    transform.position += new Vector3(input.horizontal * trueMoveSpeed * dt, 0);
 
-                    if (input.vertical > MINIMUM_INPUT || input.vertical < -MINIMUM_INPUT)
-                        transform.position += new Vector3(0, input.vertical * trueMoveSpeed * dt);
-                }
+                if (input.vertical > MINIMUM_INPUT || input.vertical < -MINIMUM_INPUT)
+                    transform.position += new Vector3(0, input.vertical * trueMoveSpeed * dt);
 
             });
         }
@@ -548,6 +546,20 @@ namespace LD54 {
                 entity.Remove<DeathEvent>();
                 Object.Destroy(transformRef.value.gameObject);
             });
+        }
+    }
+    [EcsComponent] public struct CameraTarget{}
+    partial class CameraAimSystem : UpdateSystem {
+        public override void Update() {
+            entities.Each((Player Player, TransformComponent transformComponent) => {
+                entities.Each((CameraTarget target, TransformRef transformRef) => {
+
+                    var mousePos = Wargon.Kit.MousePosition();
+                    transformRef.value.position = (mousePos + transformComponent.position) / 2;
+
+                });
+            });
+
         }
     }
 }

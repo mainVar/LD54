@@ -291,16 +291,21 @@ namespace Roguelike.Physics2D {
         [Inject] private Grid2D grid2D;
 
         public override void Update() {
-            // var clearJob = new Grid2D.ClearCellsJob {
-            //     cells = grid2D.cells
-            // };
-            for (int i = 0; i < grid2D.cells.Length; i++) {
-                var cell = grid2D.cells[i];
+            var clearJob = new ClearJob {
+                cells = grid2D.cells
+            };
+            clearJob.Schedule(grid2D.cells.Length,default).Complete();
+        }
+        [BurstCompile]
+        struct ClearJob : IJobFor {
+            public UnsafeList<Grid2DCell> cells;
+
+            public void Execute(int i) {
+                var cell = cells[i];
                 cell.CollidersBuffer.Clear();
                 cell.RectanglesBuffer.Clear();
-                grid2D.cells[i] = cell;
+                cells[i] = cell;
             }
-            //clearJob.Schedule(grid2D.cells.Length,default).Complete();
         }
     }
     // public partial class UpdateGridPositionSystem : UpdateSystem {
@@ -664,102 +669,32 @@ namespace Roguelike.Physics2D {
                     }
                 }
         }
-        [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Default)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        HitInfo ResolveCollisionCircleVsRectInternal2(ref Circle2D circle, ref TransformComponent circleTransform, in Rectangle2D rect, in TransformComponent rectTransform)
-        {
-            // Calculate the distance between the circle's center and the rectangle's center
-            float deltaX = rectTransform.position.x + rect.w / 2 - circle.position.x;
-            float deltaY = rectTransform.position.y + rect.h / 2 - circle.position.y;
+        
+        HitInfo ResolveCollisionCircleVsRectInternal4(ref Circle2D circle, ref TransformComponent circleTransform, in Rectangle2D rect, in TransformComponent rectTransform) {
+            float2 closest;
+            closest.x = math.max(rectTransform.position.x, math.min(circle.position.x, rectTransform.position.x + rect.w));
+            closest.y = math.max(rectTransform.position.y, math.min(circle.position.y, rectTransform.position.y + rect.h));
 
-            // Calculate the half-width and half-height of the rectangle
-            float halfWidth = rect.w / 2;
-            float halfHeight = rect.h / 2;
-
-            // Calculate the absolute values of the distance components
-            float absDeltaX = math.abs(deltaX);
-            float absDeltaY = math.abs(deltaY);
-
-            // Calculate the penetration depths along the x and y axes
-            float penetrationX = halfWidth - absDeltaX;
-            float penetrationY = halfHeight - absDeltaY;
-
-            if (penetrationX >= 0 && penetrationY >= 0)
-            {
-                // The circle is completely inside the rectangle
-
-                // Determine which side of the rectangle the circle is closest to
-                if (penetrationX < penetrationY)
-                {
-                    // Move the circle out horizontally
-                    float moveX = math.sign(deltaX) * penetrationX;
-                    circle.position.x += moveX+0.1f;
-                }
-                else
-                {
-                    // Move the circle out vertically
-                    float moveY = math.sign(deltaY) * penetrationY;
-                    circle.position.y += moveY+0.1f;
-                }
-
-                circleTransform.position.x = circle.position.x;
-                circleTransform.position.y = circle.position.y;
-
-                // Calculate the collision point and normal
-                float collisionX = circle.position.x + math.sign(deltaX) * circle.radius;
-                float collisionY = circle.position.y + math.sign(deltaY) * circle.radius;
-                float2 normal = new float2(-math.sign(deltaX), -math.sign(deltaY));
-
-                return new HitInfo
-                {
-                    Pos = new float2(collisionX, collisionY),
-                    Normal = normal,
-                    From = -1,
-                    Index = -1
-                };
+            float2 rayToNearest = closest - circle.position;
+            
+            // Calculate the overlap or penetration depth
+            float overlap = circle.radius - math.length(rayToNearest);
+            // Calculate the normalized collision vector
+            if (float.IsNaN(overlap)) {
+                overlap = 0;
             }
-            else
-            {
-                // Handle the collision as you were doing before when the circle is not completely inside the rectangle
-                float closestX = math.max(rectTransform.position.x, math.min(circle.position.x, rectTransform.position.x + rect.w));
-                float closestY = math.max(rectTransform.position.y, math.min(circle.position.y, rectTransform.position.y + rect.h));
 
-                deltaX = circle.position.x - closestX;
-                deltaY = circle.position.y - closestY;
-
-                float distance;
-                if (deltaX == 0 && deltaY == 0)
-                {
-                    // Handle the case where deltaX and deltaY are both zero (or very close to zero)
-                    distance = 0.0f; // Set a default distance
-                }
-                else
-                {
-                    distance = math.sqrt(deltaX * deltaX + deltaY * deltaY);
-                }
-
-                // Calculate the overlap or penetration depth
-                float overlap = circle.radius - distance;
-
-                // Calculate the normalized collision vector
-                float2 normal = distance != 0 ? new float2(deltaX / distance, deltaY / distance) : float2.zero;
-
-                // Move the circle away from the rectangle along the collision vector
-                circle.position += normal * overlap + 0.1f;
-
-                float collisionX = circle.position.x - normal.x * circle.radius;
-                float collisionY = circle.position.y - normal.y * circle.radius;
-                circleTransform.position.x = circle.position.x;
-                circleTransform.position.y = circle.position.y;
-
-                return new HitInfo
-                {
-                    Pos = new float2(collisionX, collisionY),
-                    Normal = normal,
-                    From = -1,
-                    Index = -1
-                };
+            if (overlap > 0) {
+                circle.position -= math.normalize(rayToNearest) * overlap;
             }
+            circleTransform.position.x = circle.position.x;
+            circleTransform.position.y = circle.position.y;
+            return new HitInfo {
+                Pos = closest,
+                Normal = default,
+                From = circle.index,
+                Index = -1
+            };
         }
 
         [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Default)]
@@ -792,7 +727,7 @@ namespace Roguelike.Physics2D {
             }
             
             // Move the circle away from the rectangle along the collision vector
-            circle.position += (normal * overlap + 0.01f);
+            circle.position += (normal * overlap);
                 
             float collisionX = circle.position.x - normal.x * circle.radius;
             float collisionY = circle.position.y - normal.y * circle.radius;

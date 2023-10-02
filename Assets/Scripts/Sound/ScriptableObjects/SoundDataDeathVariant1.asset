@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f2d338026846088f8d62ea20096500, type: 3}
   m_Name: SoundDataDeathVariant1
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: 2612422bd09a72d438c2f6873cbf66ea, type: 3}
+  audioClip: {fileID: 8300000, guid: e0136af00034bf348b6cf757f9a26126, type: 3}
   soundType: 1

@@ -6,7 +6,7 @@ namespace LD54.Sound
     public class MenuSound : MonoBehaviour
     {
         [SerializeField] private SoundData soundData;
-        private static bool hasStarted = false;
+        public static bool hasStarted = false;
         private void Start()
         {
             if (!hasStarted)
@@ -14,10 +14,6 @@ namespace LD54.Sound
                 SoundManager.Instance.PlaySound(soundData);
                 hasStarted = true;
             }
-        }
-
-        private void OnApplicationQuit() {
-            hasStarted = false;
         }
     }
 }
