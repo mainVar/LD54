@@ -11,7 +11,6 @@ public class StaticClear : MonoBehaviour
     }
 
     private void OnApplicationQuit() {
-        MenuSound.hasStarted = false;
         Injector.DisposeAll();
     }
 }

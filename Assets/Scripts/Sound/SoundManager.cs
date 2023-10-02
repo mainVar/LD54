@@ -96,6 +96,7 @@ namespace LD54.Sound
                 source.loop = true;
                 source.volume = musicVolume;
                 KillMusic();
+                musicSources.Clear();
                 musicSources.Add(source);
             }
             else
