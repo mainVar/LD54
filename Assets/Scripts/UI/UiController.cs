@@ -41,7 +41,7 @@ public class UiController : MonoBehaviour
             float hp = playerEntity.Get<Health>().current;
             float maxHp = playerEntity.Get<Health>().max;
             _newGameButton.fillAmount = hp / maxHp;
-            if (hp <= 2)
+            if (hp <= 0)
             {
                 GameOver();
             }
@@ -50,7 +50,6 @@ public class UiController : MonoBehaviour
    
     public void GameOver()
     {
-        Cursor.lockState = CursorLockMode.None;
         _gameOver.SetActive(true);
         Time.timeScale = 0;
     }

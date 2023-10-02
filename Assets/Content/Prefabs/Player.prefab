@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 4228159704719999907}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.593, y: 0.007, z: 0}
+  m_LocalPosition: {x: 0.5604, y: 0.0177, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.32
   m_Color: {r: 0.8679245, g: 0.8058884, b: 0.5191171, a: 1}
   m_Intensity: 1.38
   m_LightVolumeIntensity: 1
@@ -184,10 +184,10 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 99.10248
-  m_PointLightOuterAngle: 155.14717
-  m_PointLightInnerRadius: 0.5
-  m_PointLightOuterRadius: 4.87
+  m_PointLightInnerAngle: 52.145958
+  m_PointLightOuterAngle: 108.19065
+  m_PointLightInnerRadius: 0.99
+  m_PointLightOuterRadius: 5.27
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -351,8 +351,8 @@ MonoBehaviour:
     - rid: 7459472410658209798
       type: {class: Health, ns: LD54, asm: Assembly-CSharp}
       data:
-        current: 25
-        max: 25
+        current: 100
+        max: 100
     - rid: 7459472410658209799
       type: {class: InputComponent, ns: LD54, asm: Assembly-CSharp}
       data:
@@ -375,7 +375,7 @@ MonoBehaviour:
         collided: 0
         trigger: 0
         layer: 1
-        collideWith: 2
+        collideWith: 0
     - rid: 7459472410658209805
       type: {class: AnimationStates, ns: LD54, asm: Assembly-CSharp}
       data:

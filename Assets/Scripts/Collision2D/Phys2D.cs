@@ -219,6 +219,7 @@ namespace Roguelike.Physics2D {
                 TransformRef transformRef, EntityConvertedEvent convertedEvent) => {
                 transformComponent.position = transformRef.value.position;
                 rect.index = Entity.id;
+                Entity.Add(new StaticTag());
             });
         }
     }
@@ -744,7 +745,7 @@ namespace Roguelike.Physics2D {
                 float2 normal = distance != 0 ? new float2(deltaX / distance, deltaY / distance) : float2.zero;
 
                 // Move the circle away from the rectangle along the collision vector
-                circle.position += normal * overlap;
+                circle.position += normal * overlap + 0.1f;
 
                 float collisionX = circle.position.x - normal.x * circle.radius;
                 float collisionY = circle.position.y - normal.y * circle.radius;

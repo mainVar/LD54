@@ -114,6 +114,8 @@ MonoBehaviour:
   - rid: 4798378729923411972
   - rid: 4798378729923411974
   - rid: 4798378729923411975
+  - rid: 4798378729923411978
+  - rid: 4798378729923411979
   runTime: 0
   destroyObject: 0
   destroyComponent: 0
@@ -145,6 +147,15 @@ MonoBehaviour:
         mono: {fileID: 2971841251053144961}
         gameObject: {fileID: 1695310116860075572}
         transform: {fileID: 4912915253209915736}
+    - rid: 4798378729923411978
+      type: {class: Damage, ns: LD54, asm: Assembly-CSharp}
+      data:
+        value: 2
+    - rid: 4798378729923411979
+      type: {class: EnemyAttack, ns: LD54, asm: Assembly-CSharp}
+      data:
+        delay: 0.25
+        delayCounter: 0.25
     - rid: 7459472410658209793
       type: {class: SpriteAnimation, ns: Animation2D, asm: Assembly-CSharp}
       data:
@@ -201,7 +212,7 @@ MonoBehaviour:
         collided: 0
         trigger: 0
         layer: 2
-        collideWith: 2
+        collideWith: 3
 --- !u!114 &456654208062673450
 MonoBehaviour:
   m_ObjectHideFlags: 0

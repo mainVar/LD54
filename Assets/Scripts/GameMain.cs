@@ -20,18 +20,23 @@ namespace LD54 {
         [SerializeField] MonoEntity prefab;
         [SerializeField] private AnimationsHolder animationsHolder;
         [SerializeField] private GameService gameService;
-        
+        private bool run;
+        public void Stop() {
+            run = false;
+        }
         void Awake() {
+            Application.targetFrameRate = 1400;
+            QualitySettings.vSyncCount = 0;
             Configs.PoolsCacheSize = 5000;
             Configs.EntityCacheSize = 5000;
             Configs.ComponentCacheSize = 5000;
             world = new World();
             MonoConverter.Init(world);
-            var grid2D = new Grid2D(10, 15,5 , world, new Vector2(-10,-15));
+            var grid2D = new Grid2D(8, 6,5 , world, new Vector2(-10,-15));
             Injector.AddAsSingle(grid2D);
             Injector.AddAsSingle(animationsHolder);
             Injector.AddAsSingle(gameService);
-            
+            Injector.AddAsSingle(this);
             update = new Systems(world)
                     
                     
@@ -44,7 +49,7 @@ namespace LD54 {
                     
                     .Add(new PrefabSpawnerSystem(prefab))
                     
-                    
+                    .Add(new EnemyAttackDelay())
                     .Add(new WeaponShootingSystem())
                     .Add(new ProjectileMoveSystem())
                     .Add(new RotateByMouseSystem())
@@ -52,6 +57,7 @@ namespace LD54 {
                     .Add(new Animation2DStateDirectionSystem())
                     .Add(new Animation2DSystem())
                     
+                    .Add(new UpdateCollisionGridPosition())
                     .Add(new Collision2DPostSystem())
                     .Add(new DamageSystem())
                     .Add(new EnemyDeathSystem())
@@ -69,28 +75,32 @@ namespace LD54 {
                 ;
             
             fixedUpdate.Init();
-
+#if UNITY_EDITOR
             new DebugInfo(world);
+#endif
+            run = true;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (world != null) {
+            if (run) {
                 update.OnUpdate();
             }
         }
         void FixedUpdate()
         {
-            if (world != null) {
+            if (run) {
                 fixedUpdate.OnUpdate();
             }
         }
         private void OnDestroy() {
+            run = false;
             if(world==null) return;
             world.Destroy();
             world = null;
             Grid2D.Instance.Clear();
+            Injector.Dispose();
         }
     }
 
@@ -101,12 +111,23 @@ namespace LD54 {
     public struct CollisionID {
         public int value;
     }
+
+    partial class UpdateCollisionGridPosition : UpdateSystem {
+        [Inject] private Grid2D grid2D;
+        public override void Update() {
+            entities.Each((Player playerTag, TransformComponent transform) => {
+                grid2D.Position = new Vector2(transform.position.x, transform.position.y);
+            });
+        }
+    }
     partial class Collision2DPostSystem : UpdateSystem, 
         IRemoveBefore<CollisionPos>, 
         IRemoveBefore<CollisionID> 
     {
         private EntityQuery projectiles;
-        private EntityQuery withHealth;
+        private EntityQuery enemies;
+        private EntityQuery player;
+        private EntityQuery enemiesThatCanAttack;
         [Inject] private Grid2D grid2D;
         protected override void OnCreate() {
             projectiles = world.GetQuery()
@@ -117,11 +138,17 @@ namespace LD54 {
                 .With<Damage>()
                 .With<Owner>();
 
-            withHealth = world.GetQuery()
+            enemies = world.GetQuery()
                 .Without<Inactive>()
+                .Without<Player>()
                 .With<Circle2D>()
                 .With<Health>();
-
+                
+            player = world.GetQuery()
+                .Without<Inactive>()
+                .With<Player>()
+                .With<Circle2D>()
+                .With<Health>();
 
         }
 
@@ -131,16 +158,16 @@ namespace LD54 {
             while (hits.Count > 0) {
                 var hit = hits.Dequeue();
                 if(hit.From ==-1) continue;
-                Entity entity = world.GetEntity(hit.From);
+                Entity entityFrom = world.GetEntity(hit.From);
                 Entity entityTo = default;
                 if (hit.Index != -1) {
                     entityTo = world.GetEntity(hit.Index);
-                    entity.GetOrCreate<CollisionID>().value = hit.Index;
+                    entityFrom.GetOrCreate<CollisionID>().value = hit.Index;
                 }
 
-                entity.GetOrCreate<CollisionPos>().value = hit.Pos;
-                if (projectiles.Has(in entity)) {
-                    entity.Get<Pooled>().SetActive(false);
+                entityFrom.GetOrCreate<CollisionPos>().value = hit.Pos;
+                if (projectiles.Has(in entityFrom)) {
+                    entityFrom.Get<Pooled>().SetActive(false);
                     // BULLETS COLLISIONS
                     
                     
@@ -154,12 +181,21 @@ namespace LD54 {
                     
                     
                 }
-                if (withHealth.Has(in entityTo)) {
+                if (enemies.Has(in entityTo)) {
                     world.CreateEntity().Add(new EntityDamagedEvent() {
-                        @from = entity,
+                        @from = entityFrom,
                         to = entityTo,
-                        amount = entity.Get<Damage>().value
+                        amount = entityFrom.Get<Damage>().value
                     });
+                }
+
+                if (player.Has(in entityTo) && entityFrom.Has<CanAttack>()) {
+                    world.CreateEntity().Add(new EntityDamagedEvent() {
+                        @from = entityFrom,
+                        to = entityTo,
+                        amount = entityFrom.Get<Damage>().value
+                    });
+                    entityFrom.Remove<CanAttack>();
                 }
                 // if (projectiles.Has(entity.id)) {
                 //     if (!entity.Has<Ricochet>() && !entity.Has<FlyThrough>()) {
@@ -451,25 +487,31 @@ namespace LD54 {
         public Entity to;
         public int amount;
     }
-    [EcsComponent]
-    public struct Damage {
-        public int value;
-    }
-    public struct DeathEvent {}
-    [EcsComponent] public struct Enemy{}
 
-    [EcsComponent]
-    public struct DeathSound {
-        public SoundData value;
+    public struct DeathEvent {}
+
+    public struct CanAttack{}
+
+    partial class EnemyAttackDelay : UpdateSystem {
+        public override void Update() {
+            var dt = Time.deltaTime;
+            entities.Without<CanAttack>().Each((Entity e, EnemyAttack enemyAttack) => {
+                if (enemyAttack.delayCounter > 0) {
+                    enemyAttack.delayCounter -= dt;
+                }
+                else {
+                    enemyAttack.delayCounter = enemyAttack.delay;
+                    e.Add(new CanAttack());
+                }
+            });
+        }
     }
     partial class DamageSystem : UpdateSystem {
         private EntityQuery damagedQuery;
         private Pool<EntityDamagedEvent> damagedEvent;
-        private Pool<Health> healthes;
         protected override void OnCreate() {
             damagedQuery = world.GetQuery().With<EntityDamagedEvent>();
             damagedEvent = world.GetPool<EntityDamagedEvent>();
-            healthes = world.GetPool<Health>();
         }
 
         public override void Update() {
@@ -489,20 +531,22 @@ namespace LD54 {
     }
 
     partial class EnemyDeathSystem : UpdateSystem {
-        
+        [Inject] private GameService gameService;
         public override void Update() {
             entities.Each((Entity entity, DeathEvent deathEvent, Enemy enemy, TransformRef transformRef, DeathSound sound, Pooled pooled) => {
                 SoundManager.Instance.PlaySound(sound.value);
                 pooled.SetActive(false);
                 entity.Remove<DeathEvent>();
+                gameService.killedEnemies++;
             });
         }
     }
     partial class PlayerDeathSystem : UpdateSystem {
         public override void Update() {
-            entities.Each((Entity entity, Pooled pooled, DeathEvent deathEvent, Player enemy) => {
-                pooled.SetActive(false);
+            entities.Each((Entity entity, DeathEvent deathEvent, Player enemy, TransformRef transformRef) => {
+                Wargon.ezs.Unity.Log.Show(Color.red, "Game Over");
                 entity.Remove<DeathEvent>();
+                Object.Destroy(transformRef.value.gameObject);
             });
         }
     }

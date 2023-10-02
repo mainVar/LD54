@@ -15,5 +15,9 @@ namespace LD54.Sound
                 hasStarted = true;
             }
         }
+
+        private void OnApplicationQuit() {
+            hasStarted = false;
+        }
     }
 }

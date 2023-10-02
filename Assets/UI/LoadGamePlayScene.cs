@@ -10,14 +10,12 @@ public class LoadGamePlayScene : MonoBehaviour
 
     private void Start()
     {
-        
-        if (startButton is not null) startButton.onClick.AddListener(LoadGameScene);
-        if (quitButton is not null) quitButton.onClick.AddListener(CloseGame);
+        startButton.onClick.AddListener(LoadGameScene);
+        quitButton.onClick.AddListener(CloseGame);
     }
 
     public void PlayAgen()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 

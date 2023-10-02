@@ -182,6 +182,46 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8573077777297971775, guid: 205b1a425fe81004d86df117baf197c7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.504717
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573077777297971775, guid: 205b1a425fe81004d86df117baf197c7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9165253
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573077777297971775, guid: 205b1a425fe81004d86df117baf197c7, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573077777297971775, guid: 205b1a425fe81004d86df117baf197c7, type: 3}
+      propertyPath: m_Intensity
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573077777297971775, guid: 205b1a425fe81004d86df117baf197c7, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573077777297971775, guid: 205b1a425fe81004d86df117baf197c7, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 303.95523
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573077777297971775, guid: 205b1a425fe81004d86df117baf197c7, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573077777297971775, guid: 205b1a425fe81004d86df117baf197c7, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573077777297971775, guid: 205b1a425fe81004d86df117baf197c7, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 3.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573077777297971775, guid: 205b1a425fe81004d86df117baf197c7, type: 3}
+      propertyPath: m_ShadowIntensityEnabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
