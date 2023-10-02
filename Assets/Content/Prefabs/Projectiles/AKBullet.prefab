@@ -64,7 +64,7 @@ MonoBehaviour:
     - rid: 4798378729923411971
       type: {class: Damage, ns: LD54, asm: Assembly-CSharp}
       data:
-        value: 5
+        value: 15
     - rid: 7459472410658209813
       type: {class: Circle2D, ns: Roguelike.Physics2D, asm: Collision2D}
       data:

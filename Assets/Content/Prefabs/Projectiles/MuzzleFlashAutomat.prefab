@@ -220,7 +220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8573077777297971775, guid: 205b1a425fe81004d86df117baf197c7, type: 3}
       propertyPath: m_ShadowIntensityEnabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

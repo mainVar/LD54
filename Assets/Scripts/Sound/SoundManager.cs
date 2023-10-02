@@ -20,21 +20,26 @@ namespace LD54.Sound
                 }
                 return PlayerPrefs.GetFloat("effectsVolume");
             }
-            set => PlayerPrefs.SetFloat("effectsVolume", value);
+            set {
+                PlayerPrefs.SetFloat("effectsVolume", value);
+            }
         }
 
         private float musicVolume {
             get {
-                if (!PlayerPrefs.HasKey("musicValue")) {
+                if (!PlayerPrefs.HasKey("musicVolume")) {
                     PlayerPrefs.SetFloat("musicVolume", 0.5f);
                 }
                 return PlayerPrefs.GetFloat("musicVolume");
             }
-            set => PlayerPrefs.SetFloat("musicVolume", value);
+            set {
+                PlayerPrefs.SetFloat("musicVolume", value);
+            }
         }
 
         private void Awake()
         {
+            Debug.Log(musicVolume);
             musicSlider.value = musicVolume;
             effectSlider.value = effectsVolume;
 
