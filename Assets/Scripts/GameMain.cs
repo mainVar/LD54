@@ -28,7 +28,7 @@ namespace LD54 {
             // Configs.ComponentCacheSize = 5000;
             world = new World();
             MonoConverter.Init(world);
-            grid2D = new Grid2D(16, 16,5 , world, new Vector2(-10,-12));
+            grid2D = new Grid2D(16, 16,5 , world, new Vector2(-10f,-12));
             Injector.AddAsSingle(grid2D);
             Injector.AddAsSingle(animationsHolder);
             Injector.AddAsSingle(gameService);
