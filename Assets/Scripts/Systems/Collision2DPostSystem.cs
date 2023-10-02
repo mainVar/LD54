@@ -14,10 +14,13 @@ namespace LD54 {
         private EntityQuery enemiesThatCanAttack;
         private EntityQuery activeRoom;
         private EntityQuery winCollide;
-        
+        private Pool<Circle2D> colliders;
+        private Pool<Pooled> pooledObjets;
         [Inject] private Grid2D grid2D;
         [Inject] private BakedParticles particles;
         protected override void OnCreate() {
+            colliders = world.GetPool<Circle2D>();
+            pooledObjets = world.GetPool<Pooled>();
             projectiles = world.GetQuery()
                 .Without<Inactive>()
                 .Without<CollisionPos>()
@@ -66,7 +69,10 @@ namespace LD54 {
 
                 entityFrom.GetOrCreate<CollisionPos>().value = hit.Pos;
                 if (projectiles.Has(in entityFrom)) {
-                    entityFrom.Get<Pooled>().SetActive(false);
+                    ref var p = ref pooledObjets.Get(entityFrom.id);
+                    ref var collider = ref colliders.Get(entityFrom.id);
+                    p.SetActive(false);
+                    collider.collided = false;
                     // BULLETS COLLISIONS
                     particles.Show("Enemy1Death", entityFrom.Get<TransformComponent>().position);
                     

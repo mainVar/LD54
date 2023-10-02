@@ -45,6 +45,16 @@ public class BakedParticles : MonoBehaviour {
         Params.rotation3D = rotation3D;
         Get(name).Emit(Params, 1);
     }
+    public void Show(string name, Vector3 pos, Quaternion rotation) {
+        pos.z = pos.y * 0.01F;
+        Params.position = pos;
+        var rotation3D = Params.rotation3D;
+
+        rotation3D = rotation.eulerAngles;
+
+        Params.rotation3D = rotation3D;
+        Get(name).Emit(Params, 1);
+    }
 }
 [System.Serializable]
 public class KeyValueRef<TKey, TValue> {

@@ -11,7 +11,7 @@ namespace LD54 {
                 SoundManager.Instance.PlaySound(sound.value);
                 pooled.SetActive(false);
                 entity.Remove<DeathEvent>();
-                bakedParticles.Show(deathEffect.value, transform.position, Random.value > 0.5f);
+                bakedParticles.Show(deathEffect.value, transform.position, Quaternion.identity);
                 gameService.killedEnemies++;
             });
         }
