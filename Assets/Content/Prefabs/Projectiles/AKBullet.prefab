@@ -54,6 +54,7 @@ MonoBehaviour:
   - rid: 7459472410658209816
   - rid: 7459472410658209817
   - rid: 4798378729923411971
+  - rid: 4798378757660344321
   runTime: 0
   destroyObject: 0
   destroyComponent: 0
@@ -65,6 +66,10 @@ MonoBehaviour:
       type: {class: Damage, ns: LD54, asm: Assembly-CSharp}
       data:
         value: 15
+    - rid: 4798378757660344321
+      type: {class: Impact, ns: LD54, asm: Assembly-CSharp}
+      data:
+        key: BulletImpact
     - rid: 7459472410658209813
       type: {class: Circle2D, ns: Roguelike.Physics2D, asm: Collision2D}
       data:

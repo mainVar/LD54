@@ -28,13 +28,12 @@ namespace LD54 {
             if (Input.GetKey(KeyCode.R)) {
                 var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 pos.z = 0;
-                var cached = Cast.CircleOverlap(pos, 2F, out int count);
+                var cached = Cast.CircleOverlap(pos, 0.7F, out int count);
                 for (int i = 0; i < count; i++) {
                     var hit = cached[i];
                     var e = world.GetEntity(hit.Index);
                     if (!e.IsNULL()) {
-                        if(e.Has<Pooled>())
-                            e.Get<Pooled>().SetActive(false);
+                        e.Add(new DeathEvent());
                     }
 
                 }

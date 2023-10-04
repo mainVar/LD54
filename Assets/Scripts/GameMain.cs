@@ -22,13 +22,12 @@ namespace LD54 {
         }
         void Awake() {
             Application.targetFrameRate = 1400;
-            QualitySettings.vSyncCount = 0;
             // Configs.PoolsCacheSize = 5000;
             // Configs.EntityCacheSize = 5000;
             // Configs.ComponentCacheSize = 5000;
             world = new World();
             MonoConverter.Init(world);
-            grid2D = new Grid2D(16, 16,5 , world, new Vector2(-10f,-12));
+            grid2D = new Grid2D(12, 12,5 , world, new Vector2(-5f,-3));
             Injector.AddAsSingle(grid2D);
             Injector.AddAsSingle(animationsHolder);
             Injector.AddAsSingle(gameService);
@@ -69,11 +68,11 @@ namespace LD54 {
                     .Add(new PlayerWinLevelSystem())
                 ;
             update.Init();
-            // fixedUpdate = new Systems(world)
-            //
-            //     ;
-            //
-            // fixedUpdate.Init();
+            fixedUpdate = new Systems(world)
+            
+                ;
+            
+            fixedUpdate.Init();
 #if UNITY_EDITOR
             new DebugInfo(world);
 #endif
@@ -87,7 +86,12 @@ namespace LD54 {
                 update.OnUpdate();
             }
         }
-
+        void FixedUpdate()
+        {
+            if (run) {
+                fixedUpdate.OnUpdate();
+            }
+        }
         private void OnDestroy() {
             run = false;
             if(world==null) return;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.Mathematics;
 using UnityEngine;
 using Wargon.ezs;
 
@@ -51,6 +52,16 @@ public class BakedParticles : MonoBehaviour {
         var rotation3D = Params.rotation3D;
 
         rotation3D = rotation.eulerAngles;
+
+        Params.rotation3D = rotation3D;
+        Get(name).Emit(Params, 1);
+    }
+    public void Show(string name, Vector3 pos, float3 rotation) {
+        pos.z = pos.y * 0.01F;
+        Params.position = pos;
+        var rotation3D = Params.rotation3D;
+        
+        rotation3D = new Vector3(rotation.x,rotation.y,rotation.z);
 
         Params.rotation3D = rotation3D;
         Get(name).Emit(Params, 1);

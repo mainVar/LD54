@@ -52,7 +52,28 @@ namespace Roguelike.Physics2D {
             count = 0;
         }
     }
+    public unsafe struct BufferInt9 {
+        private fixed int buffer[9];
+        private int count;
+        public int Count {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => count;
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] set => count = value;
+        }
 
+        public int this[int index] {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => buffer[index];
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] set => buffer[index] = value;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Add(int value) {
+            if (count == 8) return;
+            buffer[count++] = value;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Clear() {
+            count = 0;
+        }
+    }
     public unsafe struct BufferInt64 {
         private fixed int buffer[64];
         private int count;
@@ -625,10 +646,12 @@ namespace Roguelike.Physics2D {
             var cell1 = cells[idx];
             cell1.Pos = new Vector2(x * cellSize, y * cellSize) + Offset + GridPosition;
             cells[idx] = cell1;
-            if (x > 0 && x < w - 1 && y > 0 && y < h - 1)
-                for (var dx = -1; dx < 1; ++dx)
-                for (var dy = -1; dy < 1; ++dy) {
+            //if (x > 0 && x < w - 1 && y > 0 && y < h - 1)
+                for (var dx = -1; dx <= 1; ++dx)
+                for (var dy = -1; dy <= 1; ++dy) {
+                    
                     var di = w * (y + dy) + x + dx;
+                    if(di < 0 || di >= cells.Length) continue;
                     var cell2 = cells[di];
 
                     for (var i = 0; i < cell1.CollidersBuffer.Count; i++) {
@@ -669,7 +692,6 @@ namespace Roguelike.Physics2D {
                     }
                 }
         }
-        
         HitInfo ResolveCollisionCircleVsRectInternal4(ref Circle2D circle, ref TransformComponent circleTransform, in Rectangle2D rect, in TransformComponent rectTransform) {
             float2 closest;
             closest.x = math.max(rectTransform.position.x, math.min(circle.position.x, rectTransform.position.x + rect.w));
@@ -799,6 +821,7 @@ namespace Roguelike.Physics2D {
         public float2 Pos;
         public BufferInt512 CollidersBuffer;
         public BufferInt128 RectanglesBuffer;
+        public BufferInt9 Neighbors;
         private Vector3 Y1 => new Vector3(Pos.x, Pos.y + H);
         private Vector3 X1 => new Vector3(Pos.x, Pos.y);
         private Vector3 Y2 => new Vector3(Pos.x + W, Pos.y + H);
@@ -842,7 +865,7 @@ namespace Roguelike.Physics2D {
             for (var x = 0; x < w; x++)
             for (var y = 0; y < h; y++) {
                 var i = w * y + x;
-
+                
                 var cell = new Grid2DCell {
                     W = cellSize,
                     H = cellSize,
@@ -850,8 +873,25 @@ namespace Roguelike.Physics2D {
                     //CollidersMap = new UnsafeList<int>(312, Allocator.Persistent),
                     CollidersBuffer = default,
                     RectanglesBuffer = default,
+                    Neighbors = default,
                     index = i
                 };
+                
+                for (var dx = -1; dx <= 1; dx++) {
+                    for (var dy = -1; dy <= 1; dy++) {
+                        // Игнорируем текущую ячейку (dx=0, dy=0)
+                        if (dx == 0 && dy == 0) continue;
+
+                        var neighborX = x + dx;
+                        var neighborY = y + dy;
+
+                        // Проверка на выход за границы сетки
+                        if (neighborX >= 0 && neighborX < w && neighborY >= 0 && neighborY < h) {
+                            var neighborIndex = w * neighborY + neighborX;
+                            cell.Neighbors.Add(neighborIndex);
+                        }
+                    }
+                }
                 cells[i] = cell;
             }
 
@@ -895,47 +935,6 @@ namespace Roguelike.Physics2D {
         public static bool IsOverlap(in Circle2D circle1, in Circle2D circle2, out float distance) {
             distance = math.distance(circle2.position, circle1.position);
             return circle1.radius + circle2.radius > distance;
-        }
-
-
-        [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Fast)]
-        public struct Collision2DMark2ParallelJob : IJobParallelFor {
-            public UnsafeList<Grid2DCell> cells;
-            public NativePool<Circle2D> colliders;
-            public int w, h, startIndex, len;
-
-            public void Execute(int index) {
-                // int idx = startIndex + index;
-                // int x = idx % w;
-                // int y = idx / w;
-                //
-                // Grid2DCell cell1 = cells[idx];
-                // if (x <= 0 || x >= w - 1 || y <= 0 || y >= h - 1) return;
-                // for (int dx = -1; dx < 1; ++dx) 
-                // {
-                //     for (int dy = -1; dy < 1; ++dy) 
-                //     {
-                //         int di = w * (y+dy) + x+dx;
-                //         Grid2DCell cell2 = cells[di];
-                //
-                //         foreach (int i1 in cell1.CollidersMap) 
-                //         {
-                //             ref Circle2D circle1 = ref colliders.Get(i1);
-                //             foreach (int i2 in cell2.CollidersMap) 
-                //             {
-                //                 if (i1 == i2) continue;
-                //                 ref Circle2D circle2 = ref colliders.Get(i2);
-                //                 if (IsOverlap(in circle1, in circle2, out float distance)) 
-                //                 {
-                //                     circle1.collided = true;
-                //                     circle2.collided = true;
-                //                     ResolveCollision(ref circle1, ref circle2, distance);
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
-            }
         }
     }
 }

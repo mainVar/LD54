@@ -1,4 +1,5 @@
 ﻿using Roguelike.Physics2D;
+using Unity.Mathematics;
 using UnityEngine;
 using Wargon.ezs;
 using Wargon.ezs.Unity;
@@ -27,6 +28,7 @@ namespace LD54 {
                 .With<Circle2D>()
                 .With<Pooled>()
                 .With<Damage>()
+                .With<Impact>()
                 .With<Owner>();
 
             enemies = world.GetQuery()
@@ -71,10 +73,11 @@ namespace LD54 {
                 if (projectiles.Has(in entityFrom)) {
                     ref var p = ref pooledObjets.Get(entityFrom.id);
                     ref var collider = ref colliders.Get(entityFrom.id);
+                    ref var transform = ref entityFrom.Get<TransformComponent>();
                     p.SetActive(false);
                     collider.collided = false;
                     // BULLETS COLLISIONS
-                    particles.Show("Enemy1Death", entityFrom.Get<TransformComponent>().position);
+                    particles.Show(entityFrom.Get<Impact>().key, transform.position, transform.rotation);
                     
                 }
                 if (enemies.Has(in entityTo)) {

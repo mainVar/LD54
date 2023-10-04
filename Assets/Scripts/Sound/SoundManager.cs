@@ -1,53 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace LD54.Sound
 {
     public class SoundManager : MonoBehaviour {
-        public static SoundManager Instance;
+        private static SoundManager instance;
+
+        public static SoundManager Instance {
+            get {
+                if (instance == null) {
+                    instance = new GameObject("SoundManager").AddComponent<SoundManager>();
+                }
+
+                return instance;
+            }
+        }
         public Slider effectSlider;
         public Slider musicSlider;
 
         private List<AudioSource> musicSources = new List<AudioSource>();
         private List<AudioSource> soundEffectSources = new List<AudioSource>();
 
+        private float effectsV =- 1;
         private float effectsVolume {
             get {
-                if (!PlayerPrefs.HasKey("effectsVolume")) {
-                    PlayerPrefs.SetFloat("effectsVolume", 0.5f);
+                if (effectsV < 0) {
+                    if (!PlayerPrefs.HasKey("effectsVolume")) {
+                        PlayerPrefs.SetFloat("effectsVolume", 0.5f);
+                    }
+                    effectsV = PlayerPrefs.GetFloat("effectsVolume");
                 }
-                return PlayerPrefs.GetFloat("effectsVolume");
+                return effectsV;
             }
             set {
-                PlayerPrefs.SetFloat("effectsVolume", value);
+                effectsV = value;
+                PlayerPrefs.SetFloat("effectsVolume", effectsV);
             }
         }
 
+        private float musicV =- 1;
         private float musicVolume {
             get {
-                if (!PlayerPrefs.HasKey("musicVolume")) {
-                    PlayerPrefs.SetFloat("musicVolume", 0.5f);
+                if (musicV < 0) {
+                    if (!PlayerPrefs.HasKey("musicVolume")) {
+                        PlayerPrefs.SetFloat("musicVolume", 0.5f);
+                    }
+                    musicV = PlayerPrefs.GetFloat("musicVolume");
                 }
-                return PlayerPrefs.GetFloat("musicVolume");
+                return musicV;
             }
             set {
-                PlayerPrefs.SetFloat("musicVolume", value);
+                musicV = value;
+                PlayerPrefs.SetFloat("musicVolume", musicV);
             }
         }
 
         private void Awake()
         {
-            Debug.Log(musicVolume);
             musicSlider.value = musicVolume;
             effectSlider.value = effectsVolume;
 
-            if (Instance != null && Instance != this) {
+            if (instance != null && instance != this) {
                 Destroy(gameObject);
             }
             else {
-                Instance = this;
+                instance = this;
                 DontDestroyOnLoad(gameObject);
             }
         }
@@ -130,13 +148,13 @@ namespace LD54.Sound
         }
 
         private void OnDestroy() {
-            if (Instance == this) {
-                Instance = null;
+            if (instance == this) {
+                instance = null;
             }
         }
 
         private void OnApplicationQuit() {
-            Instance = null;
+            instance = null;
         }
     }
 }

@@ -71,7 +71,7 @@ MonoBehaviour:
         muzzle: {fileID: 6101236684782479196, guid: 4ac20efc37eed0a4aa90c9f5e1eff933, type: 3}
         projectile: {fileID: 2799522983765416775, guid: ad60b937badafe0468d0af8483e6c1d1, type: 3}
         firePoint: {fileID: 6548055436135123832}
-        spread: 6
+        spread: 10
         timer: 0
     - rid: 7459472410658209811
       type: {class: AttackDelay, ns: LD54, asm: Assembly-CSharp}
@@ -80,7 +80,7 @@ MonoBehaviour:
     - rid: 7459472410658209812
       type: {class: ProjectilePerShot, ns: LD54, asm: Assembly-CSharp}
       data:
-        value: 1
+        value: 3
     - rid: 8237072761476612097
       type: {class: ShootingSound, ns: LD54, asm: Assembly-CSharp}
       data:
@@ -375,7 +375,7 @@ MonoBehaviour:
         collided: 0
         trigger: 0
         layer: 1
-        collideWith: 0
+        collideWith: 96
     - rid: 7459472410658209805
       type: {class: AnimationStates, ns: LD54, asm: Assembly-CSharp}
       data:

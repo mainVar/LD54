@@ -6,7 +6,6 @@ using Wargon.DI;
 using Wargon.ezs;
 using LD54;
 
-
 public class UiController : MonoBehaviour
 {
     [SerializeField] private Image _newGameButton;
@@ -42,10 +41,9 @@ public class UiController : MonoBehaviour
             float hp = playerEntity.Get<Health>().current;
             float maxHp = playerEntity.Get<Health>().max;
             _newGameButton.fillAmount = hp / maxHp;
-            if (hp <= 0)
-            {
+            KillsCount.text = gameService.killedEnemies.ToString();
+            if(hp <=0)
                 GameOver();
-            }
         }
     }
    
@@ -60,5 +58,8 @@ public class UiController : MonoBehaviour
         Time.timeScale = 0;
         _winLevelWindow.SetActive(true);
     }
-    
+
+    public void SetKills(int amount) {
+        KillsCount.text = amount.ToString();
+    }
 }
